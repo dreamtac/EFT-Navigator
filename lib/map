@@ -1,0 +1,539 @@
+import 'package:flutter/material.dart';
+import 'package:image_overlay_map/image_overlay_map.dart';
+import 'package:flutter/services.dart';
+import 'package:testamp/widgets/custom_widgets.dart';
+
+class FactoryB1 extends StatefulWidget {
+  FactoryB1({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+  final Size ENABLE_ICON_SIZE = const Size(35, 35);
+  final Size DISABLE_ICON_SIZE = const Size(5000, 5000);
+  final double NORMAL_ICON_SIZE = 35;
+
+  final String title;
+
+  final List<Facility> _facilityList = [];
+
+  @override
+  _FactoryB1State createState() => _FactoryB1State();
+}
+
+class _FactoryB1State extends State<FactoryB1> {
+  bool _filterVisible = false;
+  late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
+      point2 = [], //돈통, 금고 Cash register, Safe
+      point3 = [], //죽은 스캐브 Dead Scav
+      point4 = [], //캐비넷 Filing Cabinet
+      point5 = [], //무기 박스 Weapon Box
+      point6 = [], //수류탄 박스 Grenade Box
+      point7 = [], //탄 박스 Ammo Box
+      point8 = [], //자켓 Jacket
+      point9 = [], //의약품 Meds
+      point10 = [], //컴퓨터 본체 PC
+      point11 = [], //음식 상자 Ration Crate
+      point12 = [], //더플백 Duffle Bag
+      point13 = [], //공구 박스 Toolbox
+      point14 = [], //나무 박스 Wooden crate
+      point15 = [], //잠긴 문 Locked Room
+      point16 = []; //바닥 룻 Loose Loot
+  void lootFilter(int index) {
+    setState(() {
+      if (index == 0) {
+        if (_selections[index]) {
+          for (var point in point1) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point1) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 1) {
+        if (_selections[index]) {
+          for (var point in point2) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point2) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 2) {
+        if (_selections[index]) {
+          for (var point in point3) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point3) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 3) {
+        if (_selections[index]) {
+          for (var point in point4) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point4) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 4) {
+        if (_selections[index]) {
+          for (var point in point5) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point5) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 5) {
+        if (_selections[index]) {
+          for (var point in point6) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point6) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 6) {
+        if (_selections[index]) {
+          for (var point in point7) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point7) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 7) {
+        if (_selections[index]) {
+          for (var point in point8) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point8) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 8) {
+        if (_selections[index]) {
+          for (var point in point9) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point9) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 9) {
+        if (_selections[index]) {
+          for (var point in point10) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point10) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 10) {
+        if (_selections[index]) {
+          for (var point in point11) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point11) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 11) {
+        if (_selections[index]) {
+          for (var point in point12) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point12) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 12) {
+        if (_selections[index]) {
+          for (var point in point13) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point13) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 13) {
+        if (_selections[index]) {
+          for (var point in point14) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point14) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 14) {
+        if (_selections[index]) {
+          for (var point in point15) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point15) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      } else if (index == 15) {
+        if (_selections[index]) {
+          for (var point in point16) {
+            point.size = widget.ENABLE_ICON_SIZE;
+          }
+        } else {
+          for (var point in point16) {
+            point.size = widget.DISABLE_ICON_SIZE;
+          }
+        }
+      }
+    });
+  }
+
+  final List<bool> _selections = List.generate(16, (index) => true);
+  void pressFilterButton() {
+    setState(() {
+      _filterVisible = !_filterVisible;
+    });
+  }
+
+  var size = const Size(3690.0, 2660.0);
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          FutureBuilder<MapContainer>(
+            future: _loadImage(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return MapContainer(
+                  snapshot.data!.child,
+                  snapshot.data!.size,
+                  markers: snapshot.data!.markers,
+                  markerWidgetBuilder: snapshot.data!.markerWidgetBuilder,
+                  onMarkerClicked: snapshot.data!.onMarkerClicked,
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+          Positioned(
+            left: 10,
+            right: 10,
+            bottom: 10,
+            child: AnimatedOpacity(
+              opacity: _filterVisible ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 350),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black45,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ToggleButtons(
+                    borderRadius: BorderRadius.circular(8),
+                    selectedBorderColor: Colors.green,
+                    color: Colors.green[400],
+                    selectedColor: Colors.white,
+                    fillColor: Colors.green[200],
+                    isSelected: _selections,
+                    onPressed: (int index) {
+                      setState(() {
+                        _selections[index] = !_selections[index];
+                        lootFilter(index);
+                      });
+                    },
+                    children: [
+                      _createToggleButton(
+                          Icons.attach_money_rounded), //히든 스태쉬 Hidden Stash
+                      _createToggleButton(Icons
+                          .business_center_rounded), //돈통, 금고 Cash register, Safe
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //죽은 스캐브 Dead Scav
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //캐비넷 Filing Cabinet
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //무기 박스 Weapon Box
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //수류탄 박스 Grenade Box
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //탄 박스 Ammo Box
+                      _createToggleButton(
+                          Icons.accessibility_rounded), //자켓 Jacket
+                      _createToggleButton(
+                          Icons.medical_services_outlined), //의약품 Meds
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //컴퓨터 본체 PC
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //음식 상자 Ration Crate
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //더플백 Duffle Bag
+                      _createToggleButton(
+                          Icons.work_outline_rounded), //공구 박스 Toolbox
+                      _createToggleButton(
+                          Icons.check_box_outline_blank), //나무 박스 Wooden crate
+                      _createToggleButton(
+                          Icons.lock_outlined), //잠긴 문 Locked Room
+                      _createToggleButton(
+                          Icons.lock_outlined), //바닥 룻 Loose Loot
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 5,
+            top: 5,
+            child: FloatingFilterButton(
+              onPressed: pressFilterButton,
+            ),
+          ),
+          Positioned(
+            right: 5,
+            bottom: 100,
+            top: 100,
+            child: SizedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FloatingFloorButton(
+                    movePage: () => inToBuilding(
+                        FactoryB1(title: 'Factory B1'), const Offset(0, -1.0)),
+                    up: true,
+                    heroTag: 'Factory 1F',
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<MarkerModel> _getMarker(List<Facility> facilities, double x, double y) {
+    List<MarkerModel> result = [];
+    for (var element in facilities) {
+      double dx = x / 2 + element.lng;
+      double dy = y / 2 - element.lat;
+      // offset from left top
+      result.add(MarkerModel(element, Offset(dx, dy)));
+    }
+    return result;
+  }
+
+  Widget _getMarkerWidget(double scale, MarkerModel data) {
+    if (scale > 3) {
+      print('enLarge');
+    }
+    Facility facility = data.data;
+    switch (facility.facilityId) {
+      case 1:
+        point1.add(data);
+        return Icon(
+          Icons.location_on,
+          color: Colors.blue,
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 2:
+        point2.add(data);
+        return Icon(
+          Icons.location_on,
+          color: Colors.yellow,
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 3:
+        point3.add(data);
+        return Icon(
+          Icons.location_on,
+          color: Colors.black,
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 4:
+        point4.add(data);
+        return Icon(
+          Icons.location_on,
+          color: Colors.green,
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 5:
+        point5.add(data);
+        return Icon(
+          Icons.location_on,
+          color: Colors.red,
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 6:
+        point6.add(data);
+        return Icon(
+          Icons.location_on,
+          color: Colors.purple,
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 7:
+        point7.add(data);
+        return Icon(
+          Icons.location_on,
+          color: const Color.fromARGB(255, 0, 255, 234),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 8:
+        point8.add(data);
+        return Icon(
+          Icons.location_on,
+          color: const Color.fromARGB(255, 255, 0, 149),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 9:
+        point9.add(data);
+        return Icon(
+          Icons.location_on,
+          color: const Color.fromARGB(213, 59, 100, 61),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 10:
+        point10.add(data);
+        return Icon(Icons.location_on,
+            color: const Color.fromARGB(255, 255, 136, 0),
+            size: widget.NORMAL_ICON_SIZE);
+      case 11:
+        point11.add(data);
+        return Icon(
+          Icons.location_on,
+          color: const Color.fromARGB(255, 61, 63, 211),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 12:
+        point12.add(data);
+        return Icon(
+          Icons.location_on,
+          color: const Color.fromARGB(255, 141, 192, 112),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 13:
+        point13.add(data);
+        return Icon(
+          Icons.location_on,
+          color: const Color.fromARGB(255, 158, 158, 158),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 14:
+        point14.add(data);
+        return Icon(
+          Icons.location_on,
+          color: const Color.fromARGB(255, 7, 14, 22),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 15:
+        point15.add(data);
+        return Icon(
+          Icons.location_on,
+          color: const Color.fromARGB(255, 143, 118, 35),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      case 16:
+        point15.add(data);
+        return Icon(
+          Icons.mode_comment_outlined,
+          color: const Color.fromARGB(255, 143, 118, 35),
+          size: widget.NORMAL_ICON_SIZE,
+        );
+      default:
+        return Container();
+    }
+  }
+
+  _createToggleButton(IconData icon) {
+    return Icon(
+      icon,
+    );
+  }
+
+  _onMarkerClicked(MarkerModel markerModel) {
+    // print((markerModel.data as Facility).name);
+    // if ((markerModel.data as Facility).name == 'Dorm') {
+    //   inToBuilding(Dorm01(title: '3Story Dorm 1F'), const Offset(1.0, 0.0));
+    // } else if ((markerModel.data as Facility).name == 'facility1') {
+    //   return popDialog('tarkov02');
+    // }
+  }
+
+  Future<dynamic> popDialog(String imgName) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return MarkerClickBox(
+          imgName: imgName,
+        );
+      },
+    );
+  }
+
+  void inToBuilding(Widget widget, Offset offset) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            var begin = offset;
+            var end = Offset.zero;
+            var curve = Curves.ease;
+            var tween = Tween(begin: begin, end: end).chain(
+              CurveTween(curve: curve),
+            );
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+          pageBuilder: (context, animation, secondaryAnimation) => widget),
+    );
+  }
+
+  _onTab(Size size) {}
+
+  Future<MapContainer> _loadImage() async {
+    final MapContainer map = MapContainer(
+      Image.asset('assets/images/factory_b1.png'),
+      size,
+      markers: _getMarker(widget._facilityList, 3690.0, 2660.0),
+      markerWidgetBuilder: _getMarkerWidget,
+      onMarkerClicked: _onMarkerClicked,
+      onTab: _onTab(size),
+    );
+    await Future.delayed(const Duration(seconds: 1));
+    return map;
+  }
+}
+
+class Facility {
+  int facilityId;
+  String name;
+
+  // Leaflet CRS.Simple, bounds = [[-height / 2, -width / 2], [height / 2, width / 2]]
+  double lng;
+  double lat;
+
+  Facility(this.facilityId, this.name, this.lng, this.lat);
+}
