@@ -1,0 +1,34 @@
+{
+  "name": "CustomIcons",
+  "css_prefix_text": "",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "195e94ad84c7f99d2fd3c142d67d5a57",
+      "css": "grenade",
+      "code": 59880,
+      "src": "rpgawesome"
+    },
+    {
+      "uid": "cbbea93ff03387c2dc887a8136768da0",
+      "css": "ammo_bag",
+      "code": 59653,
+      "src": "rpgawesome"
+    },
+    {
+      "uid": "5f3b3f550061ebc201eab946eefb6acc",
+      "css": "briefcase_medical",
+      "code": 62569,
+      "src": "fontawesome5"
+    },
+    {
+      "uid": "d531ea7e8c094b73df941ed0bac921f3",
+      "css": "shopping-bag",
+      "code": 62096,
+      "src": "fontawesome"
+    }
+  ]
+}

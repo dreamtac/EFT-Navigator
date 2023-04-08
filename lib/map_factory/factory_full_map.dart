@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_overlay_map/image_overlay_map.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
-import 'package:flutter/services.dart';
 import 'package:testamp/map_factory/factory_2f.dart';
 import 'package:testamp/map_factory/factory_b1.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
@@ -12,9 +12,9 @@ class FactoryFullMap extends StatefulWidget {
     Key? key,
     required this.title,
   }) : super(key: key);
-  final Size ENABLE_ICON_SIZE = const Size(35, 35);
-  final Size DISABLE_ICON_SIZE = const Size(5000, 5000);
-  final double NORMAL_ICON_SIZE = 35;
+  final Size ENABLE_ICON_SIZE = MyApp.ENABLE_ICON_SIZE;
+  final Size DISABLE_ICON_SIZE = MyApp.DISABLE_ICON_SIZE;
+  final double NORMAL_ICON_SIZE = MyApp.NORMAL_ICON_SIZE;
 
   final String title;
 
@@ -22,14 +22,14 @@ class FactoryFullMap extends StatefulWidget {
     Facility(5, 'Weapon Box1', -325, 185),
     Facility(5, 'Weapon Box2', 457, 473),
     Facility(5, 'Weapon Box3', 119, -105),
-    Facility(5, 'Weapon Box4', 48, -389),
+    Facility(5, 'Weapon Box4', 25, -389),
     Facility(5, 'Weapon Box5', -745, -174),
     Facility(14, 'Wooden crate1', -651, 64),
     Facility(14, 'Wooden crate2', -666, 312),
     Facility(14, 'Wooden crate3', -321, 750),
     Facility(14, 'Wooden crate4', -346, 450),
     Facility(14, 'Wooden crate5', -324, 450),
-    Facility(14, 'Wooden crate6', -144, 446),
+    Facility(14, 'Wooden crate6', -116, 446),
     Facility(14, 'Wooden crate7', 501, 182),
     Facility(14, 'Wooden crate8', -586, -193),
     Facility(14, 'Wooden crate9', -260, -400),
@@ -321,13 +321,16 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
               child: Column(
                 children: [
                   FloatingActionButton.small(
-                    //heroTag: 'Filter All',
+                    heroTag: 'Filter All',
                     onPressed: () => pressAllButton(),
                     backgroundColor:
                         allToggle ? Colors.green[200] : Colors.black38,
                     foregroundColor:
                         allToggle ? Colors.white : Colors.green[400],
                     child: const Icon(Icons.abc),
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -384,38 +387,39 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
               ),
             ),
           ),
-          Positioned(
-            left: 5,
-            top: 5,
+          Align(
+            alignment: Alignment.centerLeft,
             child: FloatingFilterButton(
               onPressed: pressFilterButton,
             ),
           ),
-          Positioned(
-            right: 5,
-            bottom: 100,
-            top: 100,
-            child: SizedBox(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FloatingFloorButton(
-                    movePage: () => inToBuilding(
-                        Factory_2F(title: 'Factory F1'), const Offset(0, -1.0)),
-                    up: true,
-                    heroTag: 'Factory 1F',
-                  ),
-                  FloatingFloorButton(
-                    movePage: () => inToBuilding(
-                        FactoryB1(
-                          title: 'Factory B1',
-                        ),
-                        const Offset(0, 1.0)),
-                    up: false,
-                    heroTag: 'Factory B1',
-                  ),
-                ],
-              ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingFloorButton(
+                  movePage: () => inToBuilding(
+                      Factory2F(
+                        title: 'Factory F1',
+                      ),
+                      const Offset(0.0, -1.0)),
+                  up: true,
+                  heroTag: 'Factory 1F',
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                FloatingFloorButton(
+                  movePage: () => inToBuilding(
+                      FactoryB1(
+                        title: 'Factory B1',
+                      ),
+                      const Offset(0, 1.0)),
+                  up: false,
+                  heroTag: 'Factory B1',
+                ),
+              ],
             ),
           ),
         ],
@@ -443,110 +447,112 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
       case 1:
         point1.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.hiddenStashPin,
           color: Colors.blue,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 2:
         point2.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.safePin,
           color: Colors.yellow,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 3:
         point3.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.deadScavPin,
           color: Colors.black,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 4:
         point4.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.cabinetPin,
           color: Colors.green,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 5:
         point5.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.weaponBoxPin,
           color: Colors.red,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 6:
         point6.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.grenadeBoxPin,
           color: Colors.purple,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 7:
         point7.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.ammoBoxPin,
           color: const Color.fromARGB(255, 0, 255, 234),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 8:
         point8.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.jacketPin,
           color: const Color.fromARGB(255, 255, 0, 149),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 9:
         point9.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.medsPin,
           color: const Color.fromARGB(213, 59, 100, 61),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 10:
         point10.add(data);
-        return Icon(Icons.location_on,
-            color: const Color.fromARGB(255, 255, 136, 0),
-            size: widget.NORMAL_ICON_SIZE);
+        return Icon(
+          MyApp.pcPin,
+          color: const Color.fromARGB(255, 255, 136, 0),
+          size: widget.NORMAL_ICON_SIZE,
+        );
       case 11:
         point11.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.rationCratePin,
           color: const Color.fromARGB(255, 61, 63, 211),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 12:
         point12.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.duffleBagPin,
           color: const Color.fromARGB(255, 141, 192, 112),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 13:
         point13.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.toolBoxPin,
           color: const Color.fromARGB(255, 158, 158, 158),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 14:
         point14.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.woodenCratePin,
           color: const Color.fromARGB(255, 7, 14, 22),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 15:
         point15.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.lockedRoomPin,
           color: const Color.fromARGB(255, 143, 118, 35),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 16:
         point15.add(data);
         return Icon(
-          Icons.mode_comment_outlined,
+          MyApp.looseLootPin,
           color: const Color.fromARGB(255, 143, 118, 35),
           size: widget.NORMAL_ICON_SIZE,
         );
@@ -586,14 +592,8 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
       context,
       PageRouteBuilder(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = offset;
-            var end = Offset.zero;
-            var curve = Curves.ease;
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-            return SlideTransition(
-              position: animation.drive(tween),
+            return FadeTransition(
+              opacity: animation,
               child: child,
             );
           },

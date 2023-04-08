@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:image_overlay_map/image_overlay_map.dart';
 import 'package:flutter/services.dart';
+import 'package:image_overlay_map/image_overlay_map.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
 
@@ -9,9 +9,9 @@ class FactoryB1 extends StatefulWidget {
     Key? key,
     required this.title,
   }) : super(key: key);
-  final Size ENABLE_ICON_SIZE = const Size(35, 35);
-  final Size DISABLE_ICON_SIZE = const Size(5000, 5000);
-  final double NORMAL_ICON_SIZE = 35;
+  final Size ENABLE_ICON_SIZE = MyApp.ENABLE_ICON_SIZE;
+  final Size DISABLE_ICON_SIZE = MyApp.DISABLE_ICON_SIZE;
+  final double NORMAL_ICON_SIZE = MyApp.NORMAL_ICON_SIZE;
 
   final String title;
 
@@ -19,6 +19,7 @@ class FactoryB1 extends StatefulWidget {
     Facility(13, 'Toolbox1', 575, -152),
     Facility(6, 'Grenade Box1', 233, -107),
     Facility(14, 'Wooden crate', 181, -273),
+    Facility(15, 'Locked Room', 492, 867),
   ];
 
   @override
@@ -258,127 +259,134 @@ class _FactoryB1State extends State<FactoryB1> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          FutureBuilder<MapContainer>(
-            future: _loadImage(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return MapContainer(
-                  snapshot.data!.child,
-                  snapshot.data!.size,
-                  markers: snapshot.data!.markers,
-                  markerWidgetBuilder: snapshot.data!.markerWidgetBuilder,
-                  onMarkerClicked: snapshot.data!.onMarkerClicked,
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
-          Positioned(
-            left: 10,
-            right: 10,
-            bottom: 10,
-            child: AnimatedOpacity(
-              opacity: _filterVisible ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 350),
-              child: Column(
-                children: [
-                  FloatingActionButton.small(
-                    //heroTag: 'Filter All',
-                    onPressed: () => pressAllButton(),
-                    backgroundColor:
-                        allToggle ? Colors.green[200] : Colors.black38,
-                    foregroundColor:
-                        allToggle ? Colors.white : Colors.green[400],
-                    child: const Icon(Icons.abc),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black38,
-                      borderRadius: BorderRadius.circular(8),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, _filterVisible);
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            FutureBuilder<MapContainer>(
+              future: _loadImage(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return MapContainer(
+                    snapshot.data!.child,
+                    snapshot.data!.size,
+                    markers: snapshot.data!.markers,
+                    markerWidgetBuilder: snapshot.data!.markerWidgetBuilder,
+                    onMarkerClicked: snapshot.data!.onMarkerClicked,
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
+            Positioned(
+              left: 10,
+              right: 10,
+              bottom: 10,
+              child: AnimatedOpacity(
+                opacity: _filterVisible ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 350),
+                child: Column(
+                  children: [
+                    FloatingActionButton.small(
+                      onPressed: () => pressAllButton(),
+                      backgroundColor:
+                          allToggle ? Colors.green[200] : Colors.black38,
+                      foregroundColor:
+                          allToggle ? Colors.white : Colors.green[400],
+                      child: const Icon(Icons.abc),
                     ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: ToggleButtons(
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black38,
                         borderRadius: BorderRadius.circular(8),
-                        selectedBorderColor: Colors.green,
-                        color: Colors.green[400],
-                        selectedColor: Colors.white,
-                        fillColor: Colors.green[200],
-                        isSelected: selections,
-                        onPressed: (int index) {
-                          setState(() {
-                            selections[index] = !selections[index];
-                            lootFilter(index);
-                          });
-                        },
-                        children: [
-                          _createToggleButton(
-                              MyApp.hiddenStash), //히든 스태쉬 Hidden Stash
-                          _createToggleButton(
-                              MyApp.safe), //돈통, 금고 Cash register, Safe
-                          _createToggleButton(
-                              MyApp.deadScav), //죽은 스캐브 Dead Scav
-                          _createToggleButton(
-                              MyApp.cabinet), //캐비넷 Filing Cabinet
-                          _createToggleButton(
-                              MyApp.weaponBox), //무기 박스 Weapon Box
-                          _createToggleButton(
-                              MyApp.grenadeBox), //수류탄 박스 Grenade Box
-                          _createToggleButton(MyApp.ammoBox), //탄 박스 Ammo Box
-                          _createToggleButton(MyApp.jacket), //자켓 Jacket
-                          _createToggleButton(MyApp.meds), //의약품 Meds
-                          _createToggleButton(MyApp.pc), //컴퓨터 본체 PC
-                          _createToggleButton(
-                              MyApp.rationCrate), //음식 상자 Ration Crate
-                          _createToggleButton(MyApp.duffleBag), //더플백 Duffle Bag
-                          _createToggleButton(MyApp.toolBox), //공구 박스 Toolbox
-                          _createToggleButton(
-                              MyApp.woodenCrate), //나무 박스 Wooden crate
-                          _createToggleButton(
-                              MyApp.lockedRoom), //잠긴 문 Locked Room
-                          _createToggleButton(
-                              MyApp.looseLoot), //바닥 룻 Loose Loot
-                        ],
+                      ),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: ToggleButtons(
+                          borderRadius: BorderRadius.circular(8),
+                          selectedBorderColor: Colors.green,
+                          color: Colors.green[400],
+                          selectedColor: Colors.white,
+                          fillColor: Colors.green[200],
+                          isSelected: selections,
+                          onPressed: (int index) {
+                            setState(() {
+                              selections[index] = !selections[index];
+                              lootFilter(index);
+                            });
+                          },
+                          children: [
+                            _createToggleButton(
+                                MyApp.hiddenStash), //히든 스태쉬 Hidden Stash
+                            _createToggleButton(
+                                MyApp.safe), //돈통, 금고 Cash register, Safe
+                            _createToggleButton(
+                                MyApp.deadScav), //죽은 스캐브 Dead Scav
+                            _createToggleButton(
+                                MyApp.cabinet), //캐비넷 Filing Cabinet
+                            _createToggleButton(
+                                MyApp.weaponBox), //무기 박스 Weapon Box
+                            _createToggleButton(
+                                MyApp.grenadeBox), //수류탄 박스 Grenade Box
+                            _createToggleButton(MyApp.ammoBox), //탄 박스 Ammo Box
+                            _createToggleButton(MyApp.jacket), //자켓 Jacket
+                            _createToggleButton(MyApp.meds), //의약품 Meds
+                            _createToggleButton(MyApp.pc), //컴퓨터 본체 PC
+                            _createToggleButton(
+                                MyApp.rationCrate), //음식 상자 Ration Crate
+                            _createToggleButton(
+                                MyApp.duffleBag), //더플백 Duffle Bag
+                            _createToggleButton(MyApp.toolBox), //공구 박스 Toolbox
+                            _createToggleButton(
+                                MyApp.woodenCrate), //나무 박스 Wooden crate
+                            _createToggleButton(
+                                MyApp.lockedRoom), //잠긴 문 Locked Room
+                            _createToggleButton(
+                                MyApp.looseLoot), //바닥 룻 Loose Loot
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          Positioned(
-            left: 5,
-            top: 5,
-            child: FloatingFilterButton(
-              onPressed: pressFilterButton,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: FloatingFilterButton(
+                onPressed: pressFilterButton,
+              ),
             ),
-          ),
-          Positioned(
-            right: 5,
-            bottom: 100,
-            top: 100,
-            child: SizedBox(
+            Align(
+              alignment: Alignment.centerRight,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FloatingFloorButton(
                     movePage: () => Navigator.pop(context, _filterVisible),
                     up: true,
                     heroTag: 'Factory B1',
                   ),
+                  const SizedBox(
+                    height: 100,
+                  )
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -403,110 +411,112 @@ class _FactoryB1State extends State<FactoryB1> {
       case 1:
         point1.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.hiddenStashPin,
           color: Colors.blue,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 2:
         point2.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.safePin,
           color: Colors.yellow,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 3:
         point3.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.deadScavPin,
           color: Colors.black,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 4:
         point4.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.cabinetPin,
           color: Colors.green,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 5:
         point5.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.weaponBoxPin,
           color: Colors.red,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 6:
         point6.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.grenadeBoxPin,
           color: Colors.purple,
           size: widget.NORMAL_ICON_SIZE,
         );
       case 7:
         point7.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.ammoBoxPin,
           color: const Color.fromARGB(255, 0, 255, 234),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 8:
         point8.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.jacketPin,
           color: const Color.fromARGB(255, 255, 0, 149),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 9:
         point9.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.medsPin,
           color: const Color.fromARGB(213, 59, 100, 61),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 10:
         point10.add(data);
-        return Icon(Icons.location_on,
-            color: const Color.fromARGB(255, 255, 136, 0),
-            size: widget.NORMAL_ICON_SIZE);
+        return Icon(
+          MyApp.pcPin,
+          color: const Color.fromARGB(255, 255, 136, 0),
+          size: widget.NORMAL_ICON_SIZE,
+        );
       case 11:
         point11.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.rationCratePin,
           color: const Color.fromARGB(255, 61, 63, 211),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 12:
         point12.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.duffleBagPin,
           color: const Color.fromARGB(255, 141, 192, 112),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 13:
         point13.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.toolBoxPin,
           color: const Color.fromARGB(255, 158, 158, 158),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 14:
         point14.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.woodenCratePin,
           color: const Color.fromARGB(255, 7, 14, 22),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 15:
         point15.add(data);
         return Icon(
-          Icons.location_on,
+          MyApp.lockedRoomPin,
           color: const Color.fromARGB(255, 143, 118, 35),
           size: widget.NORMAL_ICON_SIZE,
         );
       case 16:
         point15.add(data);
         return Icon(
-          Icons.mode_comment_outlined,
+          MyApp.looseLootPin,
           color: const Color.fromARGB(255, 143, 118, 35),
           size: widget.NORMAL_ICON_SIZE,
         );
@@ -546,19 +556,13 @@ class _FactoryB1State extends State<FactoryB1> {
       context,
       PageRouteBuilder(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = offset;
-            var end = Offset.zero;
-            var curve = Curves.ease;
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-            return SlideTransition(
-              position: animation.drive(tween),
+            return FadeTransition(
+              opacity: animation,
               child: child,
             );
           },
           pageBuilder: (context, animation, secondaryAnimation) => widget),
-    );
+    ).then((value) => _update(value));
   }
 
   _onTab(Size size) {}
@@ -574,6 +578,12 @@ class _FactoryB1State extends State<FactoryB1> {
     );
     //await Future.delayed(const Duration(milliseconds: 500));
     return map;
+  }
+
+  void _update(bool value) {
+    setState(() {
+      _filterVisible = value;
+    });
   }
 }
 
