@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:image_overlay_map/image_overlay_map.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
+import 'package:testamp/widgets/facility_model.dart';
 
 class FactoryB1 extends StatefulWidget {
   FactoryB1({
@@ -16,10 +17,10 @@ class FactoryB1 extends StatefulWidget {
   final String title;
 
   final List<Facility> _facilityList = [
-    Facility(13, 'Toolbox1', 575, -152),
-    Facility(6, 'Grenade Box1', 233, -107),
-    Facility(14, 'Wooden crate', 181, -273),
-    Facility(15, 'Locked Room', 492, 867),
+    Facility(13, 'Factory_B1_Toolbox1', 575, -152),
+    Facility.pic(6, 'Factory_B1_Grenade_Box1', 233, -107),
+    Facility(14, 'Factory_B1_Wooden_Crate', 181, -273),
+    Facility(15, 'Factory_B1_Locked_Room', 492, 867),
   ];
 
   @override
@@ -238,27 +239,38 @@ class _FactoryB1State extends State<FactoryB1> {
   }
 
   void pressAllButton() {
-    setState(() {
-      allToggle = !allToggle;
-      if (allToggle) {
-        for (int i = 0; i < selections.length; i++) {
-          selections[i] = true;
+    if (_filterVisible) {
+      setState(() {
+        allToggle = !allToggle;
+        if (allToggle) {
+          for (int i = 0; i < selections.length; i++) {
+            selections[i] = true;
+          }
+        } else {
+          for (int i = 0; i < selections.length; i++) {
+            selections[i] = false;
+          }
         }
-      } else {
-        for (int i = 0; i < selections.length; i++) {
-          selections[i] = false;
-        }
+      });
+      for (int i = 0; i < selections.length; i++) {
+        lootFilter(i);
       }
-    });
-    for (int i = 0; i < selections.length; i++) {
-      lootFilter(i);
     }
   }
 
   var size = const Size(3690.0, 2660.0);
+
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context, _filterVisible);
@@ -297,6 +309,7 @@ class _FactoryB1State extends State<FactoryB1> {
                 child: Column(
                   children: [
                     FloatingActionButton.small(
+                      heroTag: 'Filter All1',
                       onPressed: () => pressAllButton(),
                       backgroundColor:
                           allToggle ? Colors.green[200] : Colors.black38,
@@ -322,10 +335,14 @@ class _FactoryB1State extends State<FactoryB1> {
                           fillColor: Colors.green[200],
                           isSelected: selections,
                           onPressed: (int index) {
-                            setState(() {
-                              selections[index] = !selections[index];
-                              lootFilter(index);
-                            });
+                            if (_filterVisible) {
+                              setState(
+                                () {
+                                  selections[index] = !selections[index];
+                                  lootFilter(index);
+                                },
+                              );
+                            }
                           },
                           children: [
                             _createToggleButton(
@@ -431,11 +448,7 @@ class _FactoryB1State extends State<FactoryB1> {
         );
       case 4:
         point4.add(data);
-        return Icon(
-          MyApp.cabinetPin,
-          color: Colors.green,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.cabinetPinPic : MyApp.cabinetPin;
       case 5:
         point5.add(data);
         return Icon(
@@ -532,12 +545,10 @@ class _FactoryB1State extends State<FactoryB1> {
   }
 
   _onMarkerClicked(MarkerModel markerModel) {
-    // print((markerModel.data as Facility).name);
-    // if ((markerModel.data as Facility).name == 'Dorm') {
-    //   inToBuilding(Dorm01(title: '3Story Dorm 1F'), const Offset(1.0, 0.0));
-    // } else if ((markerModel.data as Facility).name == 'facility1') {
-    //   return popDialog('tarkov02');
-    // }
+    print((markerModel.data as Facility).name);
+    if ((markerModel.data as Facility).picture) {
+      return popDialog((markerModel.data as Facility).name);
+    }
   }
 
   Future<dynamic> popDialog(String imgName) {
@@ -585,15 +596,4 @@ class _FactoryB1State extends State<FactoryB1> {
       _filterVisible = value;
     });
   }
-}
-
-class Facility {
-  int facilityId;
-  String name;
-
-  // Leaflet CRS.Simple, bounds = [[-height / 2, -width / 2], [height / 2, width / 2]]
-  double lng;
-  double lat;
-
-  Facility(this.facilityId, this.name, this.lng, this.lat);
 }

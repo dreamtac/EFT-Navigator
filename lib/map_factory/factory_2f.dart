@@ -5,6 +5,7 @@ import 'package:testamp/main.dart';
 import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
 import 'package:testamp/map_factory/factory_3f.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
+import 'package:testamp/widgets/facility_model.dart';
 
 class Factory2F extends StatefulWidget {
   Factory2F({
@@ -18,10 +19,10 @@ class Factory2F extends StatefulWidget {
   final String title;
 
   final List<Facility> _facilityList = [
-    Facility(14, 'Wooden crate1', -612, 581),
-    Facility(14, 'Wooden crate2', -520, -115),
-    Facility(14, 'Wooden crate3', -526, -138),
-    Facility(14, 'Wooden crate4', -406, -355),
+    Facility(14, 'Factory_2F_Wooden_Crate1', -612, 581),
+    Facility(14, 'Factory_2F_Wooden_Crate2', -520, -115),
+    Facility(14, 'Factory_2F_Wooden_Crate3', -526, -138),
+    Facility(14, 'Factory_2F_Wooden_Crate4', -406, -355),
   ];
 
   @override
@@ -240,28 +241,37 @@ class _Factory2FState extends State<Factory2F> {
   }
 
   void pressAllButton() {
-    setState(() {
-      allToggle = !allToggle;
-      if (allToggle) {
-        for (int i = 0; i < selections.length; i++) {
-          selections[i] = true;
+    if (_filterVisible) {
+      setState(() {
+        allToggle = !allToggle;
+        if (allToggle) {
+          for (int i = 0; i < selections.length; i++) {
+            selections[i] = true;
+          }
+        } else {
+          for (int i = 0; i < selections.length; i++) {
+            selections[i] = false;
+          }
         }
-      } else {
-        for (int i = 0; i < selections.length; i++) {
-          selections[i] = false;
-        }
+      });
+      for (int i = 0; i < selections.length; i++) {
+        lootFilter(i);
       }
-    });
-    for (int i = 0; i < selections.length; i++) {
-      lootFilter(i);
     }
   }
 
   var size = const Size(3690.0, 2660.0);
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context, _filterVisible);
@@ -300,16 +310,12 @@ class _Factory2FState extends State<Factory2F> {
                 child: Column(
                   children: [
                     FloatingActionButton.small(
-                      //heroTag: 'Filter All',
+                      heroTag: '',
                       onPressed: () => pressAllButton(),
-                      backgroundColor: allToggle
-                          ? Theme.of(context)
-                              .floatingActionButtonTheme
-                              .backgroundColor
-                          : Theme.of(context).disabledColor,
-                      foregroundColor: allToggle
-                          ? Theme.of(context).focusColor
-                          : Theme.of(context).highlightColor,
+                      backgroundColor:
+                          allToggle ? Colors.green[200] : Colors.black38,
+                      foregroundColor:
+                          allToggle ? Colors.white : Colors.green[400],
                       child: const Icon(Icons.abc),
                     ),
                     const SizedBox(
@@ -330,10 +336,14 @@ class _Factory2FState extends State<Factory2F> {
                           fillColor: Colors.green[200],
                           isSelected: selections,
                           onPressed: (int index) {
-                            setState(() {
-                              selections[index] = !selections[index];
-                              lootFilter(index);
-                            });
+                            if (_filterVisible) {
+                              setState(
+                                () {
+                                  selections[index] = !selections[index];
+                                  lootFilter(index);
+                                },
+                              );
+                            }
                           },
                           children: [
                             _createToggleButton(
@@ -444,11 +454,7 @@ class _Factory2FState extends State<Factory2F> {
         );
       case 4:
         point4.add(data);
-        return Icon(
-          MyApp.cabinetPin,
-          color: Colors.green,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.cabinetPinPic : MyApp.cabinetPin;
       case 5:
         point5.add(data);
         return Icon(
@@ -551,6 +557,9 @@ class _Factory2FState extends State<Factory2F> {
     } else if ((markerModel.data as Facility).name == 'facility1') {
       return popDialog('tarkov02');
     }
+    if ((markerModel.data as Facility).picture) {
+      return popDialog((markerModel.data as Facility).name);
+    }
   }
 
   Future<dynamic> popDialog(String imgName) {
@@ -598,15 +607,4 @@ class _Factory2FState extends State<Factory2F> {
       _filterVisible = value;
     });
   }
-}
-
-class Facility {
-  int facilityId;
-  String name;
-
-  // Leaflet CRS.Simple, bounds = [[-height / 2, -width / 2], [height / 2, width / 2]]
-  double lng;
-  double lat;
-
-  Facility(this.facilityId, this.name, this.lng, this.lat);
 }

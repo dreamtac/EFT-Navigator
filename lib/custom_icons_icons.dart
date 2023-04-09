@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/CustomIcons.ttf
 ///
-/// 
+///
 /// * RPG Awesome, Copyright (c) 2014, Daniela Howe
 ///         Author:    Daniela Howe & Ivan Montiel
 ///         License:   SIL (http://scripts.sil.org/OFL)
@@ -33,8 +33,14 @@ class CustomIcons {
   static const _kFontFam = 'CustomIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData ammo_bag = IconData(0xe905, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData grenade = IconData(0xe9e8, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData shopping_bag = IconData(0xf290, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData briefcase_medical = IconData(0xf469, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData cabinetpin =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ammo_bag =
+      IconData(0xe905, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData grenade =
+      IconData(0xe9e8, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData shopping_bag =
+      IconData(0xf290, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData briefcase_medical =
+      IconData(0xf469, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

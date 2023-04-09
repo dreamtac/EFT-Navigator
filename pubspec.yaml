@@ -68,9 +68,9 @@ flutter:
   uses-material-design: true
 
   assets:
-  - assets/images/customs.png
-  - assets/images/customsDorm01.png
   - assets/images/
+  - assets/images/lootImage/
+  
 
   # To add assets to your application, add an assets section, like this:
   # assets:

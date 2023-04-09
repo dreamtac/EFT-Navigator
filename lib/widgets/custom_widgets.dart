@@ -6,7 +6,7 @@ class LootImage {
   static Future<Image> loadLootImage(String imageName) async {
     final String name = imageName;
     final Image img = Image(
-      image: AssetImage('assets/images/$name.webp'),
+      image: AssetImage('assets/images/lootImage/$name.webp'),
       // width: 300,
       // height: 200,
     );

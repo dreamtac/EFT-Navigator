@@ -6,6 +6,7 @@ import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
 import 'package:testamp/map_factory/factory_2f.dart';
 import 'package:testamp/map_factory/factory_b1.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
+import 'package:testamp/widgets/facility_model.dart';
 
 class FactoryFullMap extends StatefulWidget {
   FactoryFullMap({
@@ -19,36 +20,36 @@ class FactoryFullMap extends StatefulWidget {
   final String title;
 
   final List<Facility> _facilityList = [
-    Facility(5, 'Weapon Box1', -325, 185),
-    Facility(5, 'Weapon Box2', 457, 473),
-    Facility(5, 'Weapon Box3', 119, -105),
-    Facility(5, 'Weapon Box4', 25, -389),
-    Facility(5, 'Weapon Box5', -745, -174),
-    Facility(14, 'Wooden crate1', -651, 64),
-    Facility(14, 'Wooden crate2', -666, 312),
-    Facility(14, 'Wooden crate3', -321, 750),
-    Facility(14, 'Wooden crate4', -346, 450),
-    Facility(14, 'Wooden crate5', -324, 450),
-    Facility(14, 'Wooden crate6', -116, 446),
-    Facility(14, 'Wooden crate7', 501, 182),
-    Facility(14, 'Wooden crate8', -586, -193),
-    Facility(14, 'Wooden crate9', -260, -400),
-    Facility(8, 'Jacket1', -684, 302),
-    Facility(8, 'Jacket2', -648, 302),
-    Facility(8, 'Jacket3', -283, 307),
-    Facility(8, 'Jacket4', -269, 307),
-    Facility(8, 'Jacket5', 536, 1004),
-    Facility(8, 'Jacket6', 572, 1004),
-    Facility(12, 'Duffle Bag1', -573, 357),
-    Facility(13, 'Toolbox1', -645, 244),
-    Facility(13, 'Toolbox2', 217, 396),
-    Facility(9, 'Meds1', 315, -400),
-    Facility(9, 'Meds2', 460, -290),
-    Facility(3, 'Dead Scav1', -320, -355),
-    Facility(15, 'Locked Room1', 784, -350),
-    Facility(15, 'Locked Room2', -873, -839),
-    Facility(15, 'Locked Room3', 121, 522),
-    Facility(15, 'Locked Room4', 255, 538),
+    Facility(5, 'Factory_1F_Weapon_Box1', -325, 185),
+    Facility.pic(5, 'Factory_1F_Weapon_Box2', 457, 473),
+    Facility.pic(5, 'Factory_1F_Weapon_Box3', 119, -105),
+    Facility.pic(5, 'Factory_1F_Weapon_Box4', 25, -389),
+    Facility(5, 'Factory_1F_Weapon_Box5', -745, -174),
+    Facility(14, 'Factory_1F_Wooden_Crate1', -651, 64),
+    Facility.pic(14, 'Factory_1F_Wooden_Crate2', -666, 312),
+    Facility(14, 'Factory_1F_Wooden_Crate3', -321, 750),
+    Facility.pic(14, 'Factory_1F_Wooden_Crate4', -346, 450),
+    Facility.pic(14, 'Factory_1F_Wooden_Crate5', -324, 450),
+    Facility(14, 'Factory_1F_Wooden_Crate6', -116, 446),
+    Facility(14, 'Factory_1F_Wooden_Crate7', 501, 182),
+    Facility(14, 'Factory_1F_Wooden_Crate8', -586, -193),
+    Facility(14, 'Factory_1F_Wooden_Crate9', -260, -400),
+    Facility.pic(8, 'Factory_1F_Jacket1', -684, 302),
+    Facility.pic(8, 'Factory_1F_Jacket2', -648, 302),
+    Facility(8, 'Factory_1F_Jacket3', -283, 307),
+    Facility(8, 'Factory_1F_Jacket4', -269, 307),
+    Facility(8, 'Factory_1F_Jacket5', 536, 1004),
+    Facility(8, 'Factory_1F_Jacket6', 572, 1004),
+    Facility(12, 'Factory_1F_Duffle_Bag1', -573, 357),
+    Facility(13, 'Factory_1F_Toolbox1', -645, 244),
+    Facility(13, 'Factory_1F_Toolbox2', 217, 396),
+    Facility(9, 'Factory_1F_Meds1', 315, -400),
+    Facility(9, 'Factory_1F_Meds2', 460, -290),
+    Facility(3, 'Factory_1F_Dead_Scav1', -320, -355),
+    Facility(15, 'Factory_1F_Locked_Room1', 784, -350),
+    Facility(15, 'Factory_1F_Locked_Room2', -873, -839),
+    Facility(15, 'Factory_1F_Locked_Room3', 121, 522),
+    Facility(15, 'Factory_1F_Locked_Room4', 255, 538),
   ];
 
   @override
@@ -56,6 +57,21 @@ class FactoryFullMap extends StatefulWidget {
 }
 
 class _FactoryFullMapState extends State<FactoryFullMap> {
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([]);
+    super.dispose();
+  }
+
   bool allToggle = true;
   bool _filterVisible = MyApp.filterToggle;
   late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
@@ -71,7 +87,7 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
       point11 = [], //음식 상자 Ration Crate
       point12 = [], //더플백 Duffle Bag
       point13 = [], //공구 박스 Toolbox
-      point14 = [], //나무 박스 Wooden crate
+      point14 = [], //나무 박스 Wooden Crate
       point15 = [], //잠긴 문 Locked Room
       point16 = []; //바닥 룻 Loose Loot
   void lootFilter(int index) {
@@ -267,27 +283,32 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
   }
 
   void pressAllButton() {
-    setState(() {
-      allToggle = !allToggle;
-      if (allToggle) {
-        for (int i = 0; i < selections.length; i++) {
-          selections[i] = true;
+    if (_filterVisible) {
+      setState(() {
+        allToggle = !allToggle;
+        if (allToggle) {
+          for (int i = 0; i < selections.length; i++) {
+            selections[i] = true;
+          }
+        } else {
+          for (int i = 0; i < selections.length; i++) {
+            selections[i] = false;
+          }
         }
-      } else {
-        for (int i = 0; i < selections.length; i++) {
-          selections[i] = false;
-        }
+      });
+      for (int i = 0; i < selections.length; i++) {
+        lootFilter(i);
       }
-    });
-    for (int i = 0; i < selections.length; i++) {
-      lootFilter(i);
     }
   }
 
-  var size = const Size(3690.0, 2660.0);
+  var size = const Size(6000.0, 6000.0);
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
@@ -347,10 +368,14 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
                         fillColor: Colors.green[200],
                         isSelected: selections,
                         onPressed: (int index) {
-                          setState(() {
-                            selections[index] = !selections[index];
-                            lootFilter(index);
-                          });
+                          if (_filterVisible) {
+                            setState(
+                              () {
+                                selections[index] = !selections[index];
+                                lootFilter(index);
+                              },
+                            );
+                          }
                         },
                         children: [
                           _createToggleButton(
@@ -429,6 +454,7 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
 
   List<MarkerModel> _getMarker(List<Facility> facilities, double x, double y) {
     List<MarkerModel> result = [];
+    print('x = $x, y = $y');
     for (var element in facilities) {
       double dx = x / 2 + element.lng;
       double dy = y / 2 - element.lat;
@@ -467,11 +493,7 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
         );
       case 4:
         point4.add(data);
-        return Icon(
-          MyApp.cabinetPin,
-          color: Colors.green,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.cabinetPinPic : MyApp.cabinetPin;
       case 5:
         point5.add(data);
         return Icon(
@@ -571,8 +593,17 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
     print((markerModel.data as Facility).name);
     if ((markerModel.data as Facility).name == 'Dorm') {
       inToBuilding(Dorm01(title: '3Story Dorm 1F'), const Offset(1.0, 0.0));
-    } else if ((markerModel.data as Facility).name == 'facility1') {
-      return popDialog('tarkov02');
+    }
+    if ((markerModel.data as Facility).picture) {
+      if ((markerModel.data as Facility).name == 'Factory_1F_Wooden_Crate5') {
+        return popDialog('Factory_1F_Wooden_Crate4');
+      } else if ((markerModel.data as Facility).name ==
+          'Factory_1F_Wooden_Crate2') {
+        return popDialog('Factory_1F_Jacket1');
+      } else if ((markerModel.data as Facility).name == 'Factory_1F_Jacket2') {
+        return popDialog('Factory_1F_Jacket1');
+      }
+      return popDialog((markerModel.data as Facility).name);
     }
   }
 
@@ -607,12 +638,12 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
     final MapContainer map = MapContainer(
       Image.asset('assets/images/factory_1F.png'),
       size,
-      markers: _getMarker(widget._facilityList, 3690.0, 2660.0),
+      markers: _getMarker(widget._facilityList, 6000.0, 6000.0),
       markerWidgetBuilder: _getMarkerWidget,
       onMarkerClicked: _onMarkerClicked,
       onTab: _onTab(size),
     );
-    //await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     return map;
   }
 
@@ -621,15 +652,4 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
       _filterVisible = value;
     });
   }
-}
-
-class Facility {
-  int facilityId;
-  String name;
-
-  // Leaflet CRS.Simple, bounds = [[-height / 2, -width / 2], [height / 2, width / 2]]
-  double lng;
-  double lat;
-
-  Facility(this.facilityId, this.name, this.lng, this.lat);
 }

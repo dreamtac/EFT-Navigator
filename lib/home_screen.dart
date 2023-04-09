@@ -3,8 +3,16 @@ import 'package:testamp/map_customs/dorm/customs_full_map.dart';
 import 'package:testamp/map_factory/factory_full_map.dart';
 import 'package:flutter/services.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  IconData land = Icons.landscape;
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +25,16 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            HomeToMap(
+            const HomeToMap(
               title: 'Customs',
-              page: CustomsFullMap(title: 'Customs'),
+              page: CustomsFullMap(),
             ),
             HomeToMap(
+              title: 'Factory',
+              page: FactoryFullMap(
                 title: 'Factory',
-                page: FactoryFullMap(
-                  title: 'Factory',
-                ))
+              ),
+            ),
           ],
         ),
       ),

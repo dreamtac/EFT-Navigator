@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_overlay_map/image_overlay_map.dart';
-import 'package:testamp/map_customs/dorm/customs_full_map.dart';
+import 'package:testamp/widgets/facility_model.dart';
 
 class Dorm01 extends StatefulWidget {
   Dorm01({Key? key, required this.title}) : super(key: key);
@@ -72,29 +72,29 @@ class _Dorm01State extends State<Dorm01> {
   }
 
   _onMarkerClicked(MarkerModel markerModel) {
-    if ((markerModel.data as Facility).name == 'Dorm') {
-      Navigator.push(
-        context,
-        PageRouteBuilder(
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = const Offset(1.0, 0);
-            var end = Offset.zero;
-            var curve = Curves.ease;
-            var tween = Tween(begin: begin, end: end).chain(
-              CurveTween(curve: curve),
-            );
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              CustomsFullMap(
-            title: 'Customs',
-          ),
-        ),
-      );
-    }
+    // if ((markerModel.data as Facility).name == 'Dorm') {
+    //   Navigator.push(
+    //     context,
+    //     PageRouteBuilder(
+    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //         var begin = const Offset(1.0, 0);
+    //         var end = Offset.zero;
+    //         var curve = Curves.ease;
+    //         var tween = Tween(begin: begin, end: end).chain(
+    //           CurveTween(curve: curve),
+    //         );
+    //         return SlideTransition(
+    //           position: animation.drive(tween),
+    //           child: child,
+    //         );
+    //       },
+    //       pageBuilder: (context, animation, secondaryAnimation) =>
+    //           CustomsFullMap(
+    //         title: 'Customs',
+    //       ),
+    //     ),
+    //   );
+    // }
   }
 
   _onTab(Size size) {}
@@ -110,15 +110,4 @@ class _Dorm01State extends State<Dorm01> {
     await Future.delayed(const Duration(seconds: 1));
     return map;
   }
-}
-
-class Facility {
-  int facilityId;
-  String name;
-
-  // Leaflet CRS.Simple, bounds = [[-height / 2, -width / 2], [height / 2, width / 2]]
-  double lng;
-  double lat;
-
-  Facility(this.facilityId, this.name, this.lng, this.lat);
 }

@@ -4,6 +4,7 @@ import 'package:image_overlay_map/image_overlay_map.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
+import 'package:testamp/widgets/facility_model.dart';
 
 class Factory3F extends StatefulWidget {
   Factory3F({
@@ -17,13 +18,13 @@ class Factory3F extends StatefulWidget {
   final String title;
 
   final List<Facility> _facilityList = [
-    Facility(2, 'Safe1', -655, 218),
-    Facility(8, 'Jacket1', -556, 378),
-    Facility(8, 'Jacket2', -555, 202),
-    Facility(8, 'Jacket3', -555, 188),
-    Facility(4, 'Filing Cabinet1', -558, 103),
-    Facility(4, 'Filing Cabinet2', -558, 91),
-    Facility(15, 'Locked Room1', -548, 357),
+    Facility(2, 'Factory_3F_Safe1', -655, 218),
+    Facility(8, 'Factory_3F_Jacket1', -556, 378),
+    Facility(8, 'Factory_3F_Jacket2', -555, 202),
+    Facility(8, 'Factory_3F_Jacket3', -555, 188),
+    Facility(4, 'Factory_3F_Filing_Cabinet1', -558, 103),
+    Facility(4, 'Factory_3F_Filing_Cabinet2', -558, 91),
+    Facility(15, 'Factory_3F_Locked_Room1', -548, 357),
   ];
 
   @override
@@ -242,27 +243,37 @@ class _Factory3FState extends State<Factory3F> {
   }
 
   void pressAllButton() {
-    setState(() {
-      allToggle = !allToggle;
-      if (allToggle) {
-        for (int i = 0; i < selections.length; i++) {
-          selections[i] = true;
+    if (_filterVisible) {
+      setState(() {
+        allToggle = !allToggle;
+        if (allToggle) {
+          for (int i = 0; i < selections.length; i++) {
+            selections[i] = true;
+          }
+        } else {
+          for (int i = 0; i < selections.length; i++) {
+            selections[i] = false;
+          }
         }
-      } else {
-        for (int i = 0; i < selections.length; i++) {
-          selections[i] = false;
-        }
+      });
+      for (int i = 0; i < selections.length; i++) {
+        lootFilter(i);
       }
-    });
-    for (int i = 0; i < selections.length; i++) {
-      lootFilter(i);
     }
   }
 
   var size = const Size(3690.0, 2660.0);
   @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context, _filterVisible);
@@ -301,7 +312,7 @@ class _Factory3FState extends State<Factory3F> {
                 child: Column(
                   children: [
                     FloatingActionButton.small(
-                      heroTag: 'Filter All',
+                      //heroTag: 'Filter All',
                       onPressed: () => pressAllButton(),
                       backgroundColor:
                           allToggle ? Colors.green[200] : Colors.black38,
@@ -327,10 +338,14 @@ class _Factory3FState extends State<Factory3F> {
                           fillColor: Colors.green[200],
                           isSelected: selections,
                           onPressed: (int index) {
-                            setState(() {
-                              selections[index] = !selections[index];
-                              lootFilter(index);
-                            });
+                            if (_filterVisible) {
+                              setState(
+                                () {
+                                  selections[index] = !selections[index];
+                                  lootFilter(index);
+                                },
+                              );
+                            }
                           },
                           children: [
                             _createToggleButton(
@@ -436,11 +451,14 @@ class _Factory3FState extends State<Factory3F> {
         );
       case 4:
         point4.add(data);
-        return Icon(
-          MyApp.cabinetPin,
-          color: Colors.green,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.cabinetPinPic : MyApp.cabinetPin;
+      // case 4:
+      //   point4.add(data);
+      //   return Icon(
+      //     MyApp.cabinetPin,
+      //     color: Colors.green,
+      //     size: widget.NORMAL_ICON_SIZE,
+      //   );
       case 5:
         point5.add(data);
         return Icon(
@@ -543,6 +561,9 @@ class _Factory3FState extends State<Factory3F> {
     } else if ((markerModel.data as Facility).name == 'facility1') {
       return popDialog('tarkov02');
     }
+    if ((markerModel.data as Facility).picture) {
+      return popDialog((markerModel.data as Facility).name);
+    }
   }
 
   Future<dynamic> popDialog(String imgName) {
@@ -590,15 +611,4 @@ class _Factory3FState extends State<Factory3F> {
       _filterVisible = value;
     });
   }
-}
-
-class Facility {
-  int facilityId;
-  String name;
-
-  // Leaflet CRS.Simple, bounds = [[-height / 2, -width / 2], [height / 2, width / 2]]
-  double lng;
-  double lat;
-
-  Facility(this.facilityId, this.name, this.lng, this.lat);
 }

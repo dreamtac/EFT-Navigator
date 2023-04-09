@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testamp/custom_icons_icons.dart';
 import 'package:testamp/home_screen.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   static Size ENABLE_ICON_SIZE = const Size(20, 20);
   static Size DISABLE_ICON_SIZE = const Size(5000, 5000);
-  static double NORMAL_ICON_SIZE = 20;
+  static double NORMAL_ICON_SIZE = 30;
 
   static bool filterToggle = false;
   static IconData hiddenStash = Icons.apps;
@@ -34,7 +35,11 @@ class MyApp extends StatelessWidget {
   static IconData hiddenStashPin = Icons.apps;
   static IconData safePin = Icons.screen_lock_portrait_rounded;
   static IconData deadScavPin = Icons.man_3_rounded;
-  static IconData cabinetPin = Icons.view_comfortable_outlined;
+  static Icon cabinetPin = Icon(
+    CustomIcons.cabinetpin,
+    color: Colors.green[900],
+    size: NORMAL_ICON_SIZE,
+  );
   static IconData weaponBoxPin = Icons.fire_extinguisher_rounded;
   static IconData grenadeBoxPin = Icons.sports_baseball_rounded;
   static IconData ammoBoxPin = Icons.animation_outlined;
@@ -47,6 +52,12 @@ class MyApp extends StatelessWidget {
   static IconData woodenCratePin = Icons.wordpress_outlined;
   static IconData lockedRoomPin = Icons.lock_outline_rounded;
   static IconData looseLootPin = Icons.point_of_sale_rounded;
+
+  static Icon cabinetPinPic = Icon(
+    CustomIcons.cabinetpin,
+    color: Colors.black,
+    size: NORMAL_ICON_SIZE,
+  );
 
   @override
   Widget build(BuildContext context) {
