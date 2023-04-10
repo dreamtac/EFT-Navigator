@@ -348,7 +348,7 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
                         allToggle ? Colors.green[200] : Colors.black38,
                     foregroundColor:
                         allToggle ? Colors.white : Colors.green[400],
-                    child: const Icon(Icons.abc),
+                    child: MyApp.allFilter,
                   ),
                   const SizedBox(
                     height: 5,
@@ -361,11 +361,16 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: ToggleButtons(
-                        borderRadius: BorderRadius.circular(8),
-                        selectedBorderColor: Colors.green,
-                        color: Colors.green[400],
-                        selectedColor: Colors.white,
-                        fillColor: Colors.green[200],
+                        borderRadius:
+                            Theme.of(context).toggleButtonsTheme.borderRadius,
+                        selectedBorderColor: Theme.of(context)
+                            .toggleButtonsTheme
+                            .selectedBorderColor,
+                        color: Theme.of(context).toggleButtonsTheme.color,
+                        selectedColor:
+                            Theme.of(context).toggleButtonsTheme.selectedColor,
+                        fillColor:
+                            Theme.of(context).toggleButtonsTheme.fillColor,
                         isSelected: selections,
                         onPressed: (int index) {
                           if (_filterVisible) {
@@ -378,32 +383,22 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
                           }
                         },
                         children: [
-                          _createToggleButton(
-                              MyApp.hiddenStash), //히든 스태쉬 Hidden Stash
-                          _createToggleButton(
-                              MyApp.safe), //돈통, 금고 Cash register, Safe
-                          _createToggleButton(
-                              MyApp.deadScav), //죽은 스캐브 Dead Scav
-                          _createToggleButton(
-                              MyApp.cabinet), //캐비넷 Filing Cabinet
-                          _createToggleButton(
-                              MyApp.weaponBox), //무기 박스 Weapon Box
-                          _createToggleButton(
-                              MyApp.grenadeBox), //수류탄 박스 Grenade Box
-                          _createToggleButton(MyApp.ammoBox), //탄 박스 Ammo Box
-                          _createToggleButton(MyApp.jacket), //자켓 Jacket
-                          _createToggleButton(MyApp.meds), //의약품 Meds
-                          _createToggleButton(MyApp.pc), //컴퓨터 본체 PC
-                          _createToggleButton(
-                              MyApp.rationCrate), //음식 상자 Ration Crate
-                          _createToggleButton(MyApp.duffleBag), //더플백 Duffle Bag
-                          _createToggleButton(MyApp.toolBox), //공구 박스 Toolbox
-                          _createToggleButton(
-                              MyApp.woodenCrate), //나무 박스 Wooden crate
-                          _createToggleButton(
-                              MyApp.lockedRoom), //잠긴 문 Locked Room
-                          _createToggleButton(
-                              MyApp.looseLoot), //바닥 룻 Loose Loot
+                          MyApp.hiddenStash, //히든 스태쉬 Hidden Stash
+                          MyApp.safe, //돈통, 금고 Cash register, Safe
+                          MyApp.deadScav, //죽은 스캐브 Dead Scav
+                          MyApp.cabinet,
+                          MyApp.weaponBox, //무기 박스 Weapon Box
+                          MyApp.grenadeBox, //수류탄 박스 Grenade Box
+                          MyApp.ammoBox, //탄 박스 Ammo Box
+                          MyApp.jacket, //자켓 Jacket
+                          MyApp.meds, //의약품 Meds
+                          MyApp.pc, //컴퓨터 본체 PC
+                          MyApp.rationCrate, //음식 상자 Ration Crate
+                          MyApp.duffleBag, //더플백 Duffle Bag
+                          MyApp.toolBox, //공구 박스 Toolbox
+                          MyApp.woodenCrate, //나무 박스 Wooden crate
+                          MyApp.lockedRoom, //잠긴 문 Locked Room
+                          MyApp.looseLoot, //바닥 룻 Loose Loot
                         ],
                       ),
                     ),
@@ -472,121 +467,62 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
     switch (facility.facilityId) {
       case 1:
         point1.add(data);
-        return Icon(
-          MyApp.hiddenStashPin,
-          color: Colors.blue,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture
+            ? MyApp.hiddenStashPinPic
+            : MyApp.hiddenStashPin;
       case 2:
         point2.add(data);
-        return Icon(
-          MyApp.safePin,
-          color: Colors.yellow,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.safePinPic : MyApp.safePin;
       case 3:
         point3.add(data);
-        return Icon(
-          MyApp.deadScavPin,
-          color: Colors.black,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.deadScavPinPic : MyApp.deadScavPin;
       case 4:
         point4.add(data);
         return facility.picture ? MyApp.cabinetPinPic : MyApp.cabinetPin;
       case 5:
         point5.add(data);
-        return Icon(
-          MyApp.weaponBoxPin,
-          color: Colors.red,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.weaponBoxPinPic : MyApp.weaponBoxPin;
       case 6:
         point6.add(data);
-        return Icon(
-          MyApp.grenadeBoxPin,
-          color: Colors.purple,
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.grenadeBoxPinPic : MyApp.grenadeBoxPin;
       case 7:
         point7.add(data);
-        return Icon(
-          MyApp.ammoBoxPin,
-          color: const Color.fromARGB(255, 0, 255, 234),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.ammoBoxPinPic : MyApp.ammoBoxPin;
       case 8:
         point8.add(data);
-        return Icon(
-          MyApp.jacketPin,
-          color: const Color.fromARGB(255, 255, 0, 149),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.jacketPinPic : MyApp.jacketPin;
       case 9:
         point9.add(data);
-        return Icon(
-          MyApp.medsPin,
-          color: const Color.fromARGB(213, 59, 100, 61),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.medsPinPic : MyApp.medsPin;
       case 10:
         point10.add(data);
-        return Icon(
-          MyApp.pcPin,
-          color: const Color.fromARGB(255, 255, 136, 0),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.pcPinPic : MyApp.pcPin;
       case 11:
         point11.add(data);
-        return Icon(
-          MyApp.rationCratePin,
-          color: const Color.fromARGB(255, 61, 63, 211),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture
+            ? MyApp.rationCratePinPic
+            : MyApp.rationCratePin;
       case 12:
         point12.add(data);
-        return Icon(
-          MyApp.duffleBagPin,
-          color: const Color.fromARGB(255, 141, 192, 112),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.duffleBagPinPic : MyApp.duffleBagPin;
       case 13:
         point13.add(data);
-        return Icon(
-          MyApp.toolBoxPin,
-          color: const Color.fromARGB(255, 158, 158, 158),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.toolBoxPinPic : MyApp.toolBoxPin;
       case 14:
         point14.add(data);
-        return Icon(
-          MyApp.woodenCratePin,
-          color: const Color.fromARGB(255, 7, 14, 22),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture
+            ? MyApp.woodenCratePinPic
+            : MyApp.woodenCratePin;
       case 15:
         point15.add(data);
-        return Icon(
-          MyApp.lockedRoomPin,
-          color: const Color.fromARGB(255, 143, 118, 35),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.lockedRoomPinPic : MyApp.lockedRoomPin;
       case 16:
         point15.add(data);
-        return Icon(
-          MyApp.looseLootPin,
-          color: const Color.fromARGB(255, 143, 118, 35),
-          size: widget.NORMAL_ICON_SIZE,
-        );
+        return facility.picture ? MyApp.looseLootPinPic : MyApp.looseLootPin;
+
       default:
         return Container();
     }
-  }
-
-  _createToggleButton(IconData icon) {
-    return Icon(
-      icon,
-    );
   }
 
   _onMarkerClicked(MarkerModel markerModel) {

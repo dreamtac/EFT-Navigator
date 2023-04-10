@@ -25,9 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: Column(
           children: [
-            const HomeToMap(
+            HomeToMap(
               title: 'Customs',
-              page: CustomsFullMap(),
+              page: CustomsFullMap(title: "Customs"),
             ),
             HomeToMap(
               title: 'Factory',
