@@ -391,9 +391,11 @@ class _FactoryB1State extends State<FactoryB1> {
                     up: true,
                     heroTag: 'Factory B1',
                   ),
-                  const SizedBox(
-                    height: 100,
-                  )
+                  const TextFloor(floor: -1),
+                  FloatingFloorButton.isNull(
+                    up: false,
+                    heroTag: 'Factory B2',
+                  ),
                 ],
               ),
             ),

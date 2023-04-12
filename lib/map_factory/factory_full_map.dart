@@ -427,9 +427,7 @@ class _FactoryFullMapState extends State<FactoryFullMap> {
                   up: true,
                   heroTag: 'Factory 1F',
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
+                const TextFloor(floor: 1),
                 FloatingFloorButton(
                   movePage: () => inToBuilding(
                       FactoryB1(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testamp/map_customs/dorm/customs_full_map.dart';
+import 'package:testamp/map_customs/customs_full_map.dart';
+
 import 'package:testamp/map_factory/factory_full_map.dart';
 import 'package:flutter/services.dart';
 

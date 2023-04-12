@@ -78,16 +78,26 @@ class _FloatingFilterButtonState extends State<FloatingFilterButton> {
 }
 
 class FloatingFloorButton extends StatefulWidget {
-  final Function() movePage;
+  Function()? movePage;
   final bool up;
   final String heroTag;
+  bool isNull = false;
 
-  const FloatingFloorButton({
+  FloatingFloorButton({
     super.key,
     required this.movePage,
     required this.up,
     required this.heroTag,
   });
+
+  FloatingFloorButton.isNull({
+    super.key,
+    required this.up,
+    required this.heroTag,
+  }) {
+    movePage = () {};
+    isNull = true;
+  }
 
   @override
   State<FloatingFloorButton> createState() => _FloatingFloorButtonState();
@@ -97,9 +107,10 @@ class _FloatingFloorButtonState extends State<FloatingFloorButton> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-        backgroundColor: Colors.green[200],
+        backgroundColor: widget.isNull ? Colors.grey : Colors.green[200],
+        enableFeedback: widget.isNull ? false : true,
         heroTag: widget.heroTag,
-        onPressed: widget.movePage,
+        onPressed: widget.isNull ? null : widget.movePage,
         child: widget.up
             ? const Icon(
                 Icons.arrow_upward_rounded,
@@ -431,5 +442,39 @@ class _ToggleFilterState extends State<ToggleFilter> {
     return Icon(
       icon,
     );
+  }
+}
+
+class TextFloor extends StatefulWidget {
+  final int floor;
+  const TextFloor({super.key, required this.floor});
+
+  @override
+  State<TextFloor> createState() => _TextFloorState();
+}
+
+class _TextFloorState extends State<TextFloor> {
+  //*층 수 표시
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 25),
+      child: Text(
+        _floorText(),
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  String _floorText() {
+    if (widget.floor < 0) {
+      return 'B${-widget.floor}';
+    } else {
+      return '${widget.floor}F';
+    }
   }
 }

@@ -393,9 +393,7 @@ class _Factory2FState extends State<Factory2F> {
                     up: true,
                     heroTag: 'Factory 2F',
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const TextFloor(floor: 2),
                   FloatingFloorButton(
                     movePage: () => Navigator.pop(context, _filterVisible),
                     up: false,

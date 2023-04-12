@@ -389,9 +389,11 @@ class _Factory3FState extends State<Factory3F> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 100,
+                  FloatingFloorButton.isNull(
+                    up: true,
+                    heroTag: 'Factory 3F',
                   ),
+                  const TextFloor(floor: 3),
                   FloatingFloorButton(
                     movePage: () => Navigator.pop(context, _filterVisible),
                     up: false,
