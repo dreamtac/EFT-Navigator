@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:image_overlay_map/image_overlay_map.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
+import 'package:testamp/map_factory/factory_2f.dart';
+import 'package:testamp/map_factory/factory_b1.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
 import 'package:testamp/widgets/facility_model.dart';
 
-class Factory3F extends StatefulWidget {
-  Factory3F({
+class Interchange_1F extends StatefulWidget {
+  Interchange_1F({
     Key? key,
     required this.title,
   }) : super(key: key);
@@ -18,20 +20,58 @@ class Factory3F extends StatefulWidget {
   final String title;
 
   final List<Facility> _facilityList = [
-    Facility(2, 'Factory_3F_Safe1', -655, 218),
-    Facility(8, 'Factory_3F_Jacket1', -556, 378),
-    Facility(8, 'Factory_3F_Jacket2', -555, 202),
-    Facility(8, 'Factory_3F_Jacket3', -555, 188),
-    Facility(4, 'Factory_3F_Filing_Cabinet1', -558, 103),
-    Facility(4, 'Factory_3F_Filing_Cabinet2', -558, 91),
-    Facility(15, 'Factory_3F_Locked_Room1', -548, 357),
+    // Facility(5, 'Factory_1F_Weapon_Box1', -325, 185),
+    // Facility.pic(5, 'Factory_1F_Weapon_Box2', 457, 473),
+    // Facility.pic(5, 'Factory_1F_Weapon_Box3', 119, -105),
+    // Facility.pic(5, 'Factory_1F_Weapon_Box4', 25, -389),
+    // Facility(5, 'Factory_1F_Weapon_Box5', -745, -174),
+    // Facility(14, 'Factory_1F_Wooden_Crate1', -651, 64),
+    // Facility.pic(14, 'Factory_1F_Wooden_Crate2', -666, 312),
+    // Facility(14, 'Factory_1F_Wooden_Crate3', -321, 750),
+    // Facility.pic(14, 'Factory_1F_Wooden_Crate4', -346, 450),
+    // Facility.pic(14, 'Factory_1F_Wooden_Crate5', -324, 450),
+    // Facility(14, 'Factory_1F_Wooden_Crate6', -116, 446),
+    // Facility(14, 'Factory_1F_Wooden_Crate7', 501, 182),
+    // Facility(14, 'Factory_1F_Wooden_Crate8', -586, -193),
+    // Facility(14, 'Factory_1F_Wooden_Crate9', -260, -400),
+    // Facility.pic(8, 'Factory_1F_Jacket1', -684, 302),
+    // Facility.pic(8, 'Factory_1F_Jacket2', -648, 302),
+    // Facility(8, 'Factory_1F_Jacket3', -283, 307),
+    // Facility(8, 'Factory_1F_Jacket4', -269, 307),
+    // Facility(8, 'Factory_1F_Jacket5', 536, 1004),
+    // Facility(8, 'Factory_1F_Jacket6', 572, 1004),
+    // Facility(12, 'Factory_1F_Duffle_Bag1', -573, 357),
+    // Facility(13, 'Factory_1F_Toolbox1', -645, 244),
+    // Facility(13, 'Factory_1F_Toolbox2', 217, 396),
+    // Facility(9, 'Factory_1F_Meds1', 315, -400),
+    // Facility(9, 'Factory_1F_Meds2', 460, -290),
+    // Facility(3, 'Factory_1F_Dead_Scav1', -320, -355),
+    // Facility(15, 'Factory_1F_Locked_Room1', 784, -350),
+    // Facility(15, 'Factory_1F_Locked_Room2', -873, -839),
+    // Facility(15, 'Factory_1F_Locked_Room3', 121, 522),
+    // Facility(15, 'Factory_1F_Locked_Room4', 255, 538),
   ];
 
   @override
-  _Factory3FState createState() => _Factory3FState();
+  _Interchange_1FState createState() => _Interchange_1FState();
 }
 
-class _Factory3FState extends State<Factory3F> {
+class _Interchange_1FState extends State<Interchange_1F> {
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([]);
+    super.dispose();
+  }
+
   bool allToggle = true;
   bool _filterVisible = MyApp.filterToggle;
   late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
@@ -47,7 +87,7 @@ class _Factory3FState extends State<Factory3F> {
       point11 = [], //음식 상자 Ration Crate
       point12 = [], //더플백 Duffle Bag
       point13 = [], //공구 박스 Toolbox
-      point14 = [], //나무 박스 Wooden crate
+      point14 = [], //나무 박스 Wooden Crate
       point15 = [], //잠긴 문 Locked Room
       point16 = []; //바닥 룻 Loose Loot
   void lootFilter(int index) {
@@ -262,154 +302,152 @@ class _Factory3FState extends State<Factory3F> {
     }
   }
 
-  var size = const Size(3690.0, 2660.0);
-  @override
-  void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    super.initState();
-  }
-
+  var size = const Size(1803.0, 1785.0);
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pop(context, _filterVisible);
-        return true;
-      },
-      child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            FutureBuilder<MapContainer>(
-              future: _loadImage(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return MapContainer(
-                    snapshot.data!.child,
-                    snapshot.data!.size,
-                    markers: snapshot.data!.markers,
-                    markerWidgetBuilder: snapshot.data!.markerWidgetBuilder,
-                    onMarkerClicked: snapshot.data!.onMarkerClicked,
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            ),
-            Positioned(
-              left: 10,
-              right: 10,
-              bottom: 10,
-              child: AnimatedOpacity(
-                opacity: _filterVisible ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 350),
-                child: Column(
-                  children: [
-                    FloatingActionButton.small(
-                      //heroTag: 'Filter All',
-                      onPressed: () => pressAllButton(),
-                      backgroundColor:
-                          allToggle ? Colors.green[200] : Colors.black38,
-                      foregroundColor:
-                          allToggle ? Colors.white : Colors.green[400],
-                      child: MyApp.allFilter,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black38,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: ToggleButtons(
-                          borderRadius:
-                              Theme.of(context).toggleButtonsTheme.borderRadius,
-                          selectedBorderColor: Theme.of(context)
-                              .toggleButtonsTheme
-                              .selectedBorderColor,
-                          color: Theme.of(context).toggleButtonsTheme.color,
-                          selectedColor: Theme.of(context)
-                              .toggleButtonsTheme
-                              .selectedColor,
-                          fillColor:
-                              Theme.of(context).toggleButtonsTheme.fillColor,
-                          isSelected: selections,
-                          onPressed: (int index) {
-                            if (_filterVisible) {
-                              setState(
-                                () {
-                                  selections[index] = !selections[index];
-                                  lootFilter(index);
-                                },
-                              );
-                            }
-                          },
-                          children: [
-                            MyApp.hiddenStash, //히든 스태쉬 Hidden Stash
-                            MyApp.safe, //돈통, 금고 Cash register, Safe
-                            MyApp.deadScav, //죽은 스캐브 Dead Scav
-                            MyApp.cabinet,
-                            MyApp.weaponBox, //무기 박스 Weapon Box
-                            MyApp.grenadeBox, //수류탄 박스 Grenade Box
-                            MyApp.ammoBox, //탄 박스 Ammo Box
-                            MyApp.jacket, //자켓 Jacket
-                            MyApp.meds, //의약품 Meds
-                            MyApp.pc, //컴퓨터 본체 PC
-                            MyApp.rationCrate, //음식 상자 Ration Crate
-                            MyApp.duffleBag, //더플백 Duffle Bag
-                            MyApp.toolBox, //공구 박스 Toolbox
-                            MyApp.woodenCrate, //나무 박스 Wooden crate
-                            MyApp.lockedRoom, //잠긴 문 Locked Room
-                            MyApp.looseLoot, //바닥 룻 Loose Loot//바닥 룻 Loose Loot
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: FloatingFilterButton(
-                onPressed: pressFilterButton,
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          FutureBuilder<MapContainer>(
+            future: _loadImage(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return MapContainer(
+                  snapshot.data!.child,
+                  snapshot.data!.size,
+                  markers: snapshot.data!.markers,
+                  markerWidgetBuilder: snapshot.data!.markerWidgetBuilder,
+                  onMarkerClicked: snapshot.data!.onMarkerClicked,
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+          Positioned(
+            left: 10,
+            right: 10,
+            bottom: 10,
+            child: AnimatedOpacity(
+              opacity: _filterVisible ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 350),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FloatingFloorButton.isNull(
-                    up: true,
-                    heroTag: 'Factory 3F',
+                  FloatingActionButton.small(
+                    heroTag: 'Filter All',
+                    onPressed: () => pressAllButton(),
+                    backgroundColor:
+                        allToggle ? Colors.green[200] : Colors.black38,
+                    foregroundColor:
+                        allToggle ? Colors.white : Colors.green[400],
+                    child: MyApp.allFilter,
                   ),
-                  const TextFloor(floor: 3),
-                  FloatingFloorButton(
-                    movePage: () => Navigator.pop(context, _filterVisible),
-                    up: false,
-                    heroTag: 'Factory 2F',
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: ToggleButtons(
+                        borderRadius:
+                            Theme.of(context).toggleButtonsTheme.borderRadius,
+                        selectedBorderColor: Theme.of(context)
+                            .toggleButtonsTheme
+                            .selectedBorderColor,
+                        color: Theme.of(context).toggleButtonsTheme.color,
+                        selectedColor:
+                            Theme.of(context).toggleButtonsTheme.selectedColor,
+                        fillColor:
+                            Theme.of(context).toggleButtonsTheme.fillColor,
+                        isSelected: selections,
+                        onPressed: (int index) {
+                          if (_filterVisible) {
+                            setState(
+                              () {
+                                selections[index] = !selections[index];
+                                lootFilter(index);
+                              },
+                            );
+                          }
+                        },
+                        children: [
+                          MyApp.hiddenStash, //히든 스태쉬 Hidden Stash
+                          MyApp.safe, //돈통, 금고 Cash register, Safe
+                          MyApp.deadScav, //죽은 스캐브 Dead Scav
+                          MyApp.cabinet,
+                          MyApp.weaponBox, //무기 박스 Weapon Box
+                          MyApp.grenadeBox, //수류탄 박스 Grenade Box
+                          MyApp.ammoBox, //탄 박스 Ammo Box
+                          MyApp.jacket, //자켓 Jacket
+                          MyApp.meds, //의약품 Meds
+                          MyApp.pc, //컴퓨터 본체 PC
+                          MyApp.rationCrate, //음식 상자 Ration Crate
+                          MyApp.duffleBag, //더플백 Duffle Bag
+                          MyApp.toolBox, //공구 박스 Toolbox
+                          MyApp.woodenCrate, //나무 박스 Wooden crate
+                          MyApp.lockedRoom, //잠긴 문 Locked Room
+                          MyApp.looseLoot, //바닥 룻 Loose Loot
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: FloatingFilterButton(
+              onPressed: pressFilterButton,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingFloorButton(
+                  movePage: () => inToBuilding(
+                      Factory2F(
+                        title: 'Factory F1',
+                      ),
+                      const Offset(0.0, -1.0)),
+                  up: true,
+                  heroTag: 'Factory 1F',
+                ),
+                const TextFloor(floor: 1),
+                FloatingFloorButton(
+                  movePage: () => inToBuilding(
+                      FactoryB1(
+                        title: 'Factory B1',
+                      ),
+                      const Offset(0, 1.0)),
+                  up: false,
+                  heroTag: 'Factory B1',
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
   List<MarkerModel> _getMarker(List<Facility> facilities, double x, double y) {
     List<MarkerModel> result = [];
+    print('x = $x, y = $y');
     for (var element in facilities) {
       double dx = x / 2 + element.lng;
       double dy = y / 2 - element.lat;
@@ -485,20 +523,20 @@ class _Factory3FState extends State<Factory3F> {
     }
   }
 
-  _createToggleButton(IconData icon) {
-    return Icon(
-      icon,
-    );
-  }
-
   _onMarkerClicked(MarkerModel markerModel) {
     print((markerModel.data as Facility).name);
     if ((markerModel.data as Facility).name == 'Dorm') {
       inToBuilding(Dorm01(title: '3Story Dorm 1F'), const Offset(1.0, 0.0));
-    } else if ((markerModel.data as Facility).name == 'facility1') {
-      return popDialog('tarkov02');
     }
     if ((markerModel.data as Facility).picture) {
+      if ((markerModel.data as Facility).name == 'Factory_1F_Wooden_Crate5') {
+        return popDialog('Factory_1F_Wooden_Crate4');
+      } else if ((markerModel.data as Facility).name ==
+          'Factory_1F_Wooden_Crate2') {
+        return popDialog('Factory_1F_Jacket1');
+      } else if ((markerModel.data as Facility).name == 'Factory_1F_Jacket2') {
+        return popDialog('Factory_1F_Jacket1');
+      }
       return popDialog((markerModel.data as Facility).name);
     }
   }
@@ -532,14 +570,14 @@ class _Factory3FState extends State<Factory3F> {
 
   Future<MapContainer> _loadImage() async {
     final MapContainer map = MapContainer(
-      Image.asset('assets/images/factory_3F.png'),
+      Image.asset('assets/images/interchange_1F.png'),
       size,
-      markers: _getMarker(widget._facilityList, 3690.0, 2660.0),
+      markers: _getMarker(widget._facilityList, 1803.0, 1785.0),
       markerWidgetBuilder: _getMarkerWidget,
       onMarkerClicked: _onMarkerClicked,
       onTab: _onTab(size),
     );
-    //await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     return map;
   }
 

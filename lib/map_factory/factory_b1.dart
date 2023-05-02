@@ -474,7 +474,7 @@ class _FactoryB1State extends State<FactoryB1> {
         point15.add(data);
         return facility.picture ? MyApp.lockedRoomPinPic : MyApp.lockedRoomPin;
       case 16:
-        point15.add(data);
+        point16.add(data);
         return facility.picture ? MyApp.looseLootPinPic : MyApp.looseLootPin;
 
       default:

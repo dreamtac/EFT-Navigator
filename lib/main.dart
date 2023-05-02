@@ -163,19 +163,19 @@ class MyApp extends StatelessWidget {
     size: NORMAL_ICON_SIZE,
   );
 
-  static Icon hiddenStashPinPic = Icon(
+  static Icon hiddenStashPinPic = const Icon(
     CustomIcons.hiddenstashpin,
-    color: Colors.green[900],
+    color: Colors.black,
     size: NORMAL_ICON_SIZE,
   );
-  static Icon safePinPic = Icon(
+  static Icon safePinPic = const Icon(
     CustomIcons.safepin,
-    color: Colors.green[900],
+    color: Colors.black,
     size: NORMAL_ICON_SIZE,
   );
-  static Icon deadScavPinPic = Icon(
+  static Icon deadScavPinPic = const Icon(
     CustomIcons.dadescavpin,
-    color: Colors.green[900],
+    color: Colors.black,
     size: NORMAL_ICON_SIZE,
   );
   static Icon cabinetPinPic = const Icon(

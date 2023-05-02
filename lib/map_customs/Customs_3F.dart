@@ -18,36 +18,21 @@ class Customs3F extends StatefulWidget {
   final String title;
 
   final List<Facility> _facilityList = [
-    // Facility(5, 'Factory_1F_Weapon_Box1', -325, 185),
-    // Facility.pic(5, 'Factory_1F_Weapon_Box2', 457, 473),
-    // Facility.pic(5, 'Factory_1F_Weapon_Box3', 119, -105),
-    // Facility.pic(5, 'Factory_1F_Weapon_Box4', 25, -389),
-    // Facility(5, 'Factory_1F_Weapon_Box5', -745, -174),
-    // Facility(14, 'Factory_1F_Wooden_Crate1', -651, 64),
-    // Facility.pic(14, 'Factory_1F_Wooden_Crate2', -666, 312),
-    // Facility(14, 'Factory_1F_Wooden_Crate3', -321, 750),
-    // Facility.pic(14, 'Factory_1F_Wooden_Crate4', -346, 450),
-    // Facility.pic(14, 'Factory_1F_Wooden_Crate5', -324, 450),
-    // Facility(14, 'Factory_1F_Wooden_Crate6', -116, 446),
-    // Facility(14, 'Factory_1F_Wooden_Crate7', 501, 182),
-    // Facility(14, 'Factory_1F_Wooden_Crate8', -586, -193),
-    // Facility(14, 'Factory_1F_Wooden_Crate9', -260, -400),
-    // Facility.pic(8, 'Factory_1F_Jacket1', -684, 302),
-    // Facility.pic(8, 'Factory_1F_Jacket2', -648, 302),
-    // Facility(8, 'Factory_1F_Jacket3', -283, 307),
-    // Facility(8, 'Factory_1F_Jacket4', -269, 307),
-    // Facility(8, 'Factory_1F_Jacket5', 536, 1004),
-    // Facility(8, 'Factory_1F_Jacket6', 572, 1004),
-    // Facility(12, 'Factory_1F_Duffle_Bag1', -573, 357),
-    // Facility(13, 'Factory_1F_Toolbox1', -645, 244),
-    // Facility(13, 'Factory_1F_Toolbox2', 217, 396),
-    // Facility(9, 'Factory_1F_Meds1', 315, -400),
-    // Facility(9, 'Factory_1F_Meds2', 460, -290),
-    // Facility(3, 'Factory_1F_Dead_Scav1', -320, -355),
-    // Facility(15, 'Factory_1F_Locked_Room1', 784, -350),
-    // Facility(15, 'Factory_1F_Locked_Room2', -873, -839),
-    // Facility(15, 'Factory_1F_Locked_Room3', 121, 522),
-    // Facility(15, 'Factory_1F_Locked_Room4', 255, 538),
+    //자켓
+    Facility(8, 'Customs_3F_Jacket1', 56, 1160),
+    Facility(8, 'Customs_3F_Jacket2', 62, 1160),
+    Facility(8, 'Customs_3F_Jacket3', 111, 934),
+    Facility(8, 'Customs_3F_Jacket4', 101, 935),
+    //잠긴 문
+    Facility(15, 'Customs_3F_Locked_Room1', 110, 1183),
+    Facility(15, 'Customs_3F_Locked_Room2', 85, 1144),
+    Facility(15, 'Customs_3F_Locked_Room3', 104, 1120),
+    Facility(15, 'Customs_3F_Locked_Room4', 70, 997),
+    Facility(15, 'Customs_3F_Locked_Room5', 85, 951),
+    //무기 박스
+    Facility(5, 'Customs_3F_Weapon_Box1', 228, 1114),
+    //바닥 룻
+    Facility(16, 'Customs_3F_Loose_Loot1', 125, 1182), //마크방
   ];
 
   @override
@@ -498,7 +483,7 @@ class _Customs3FState extends State<Customs3F> {
         point15.add(data);
         return facility.picture ? MyApp.lockedRoomPinPic : MyApp.lockedRoomPin;
       case 16:
-        point15.add(data);
+        point16.add(data);
         return facility.picture ? MyApp.looseLootPinPic : MyApp.looseLootPin;
 
       default:

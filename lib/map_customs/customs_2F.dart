@@ -19,36 +19,79 @@ class Customs2F extends StatefulWidget {
   final String title;
 
   final List<Facility> _facilityList = [
-    // Facility(5, 'Factory_1F_Weapon_Box1', -325, 185),
-    // Facility.pic(5, 'Factory_1F_Weapon_Box2', 457, 473),
-    // Facility.pic(5, 'Factory_1F_Weapon_Box3', 119, -105),
-    // Facility.pic(5, 'Factory_1F_Weapon_Box4', 25, -389),
-    // Facility(5, 'Factory_1F_Weapon_Box5', -745, -174),
-    // Facility(14, 'Factory_1F_Wooden_Crate1', -651, 64),
-    // Facility.pic(14, 'Factory_1F_Wooden_Crate2', -666, 312),
-    // Facility(14, 'Factory_1F_Wooden_Crate3', -321, 750),
-    // Facility.pic(14, 'Factory_1F_Wooden_Crate4', -346, 450),
-    // Facility.pic(14, 'Factory_1F_Wooden_Crate5', -324, 450),
-    // Facility(14, 'Factory_1F_Wooden_Crate6', -116, 446),
-    // Facility(14, 'Factory_1F_Wooden_Crate7', 501, 182),
-    // Facility(14, 'Factory_1F_Wooden_Crate8', -586, -193),
-    // Facility(14, 'Factory_1F_Wooden_Crate9', -260, -400),
-    // Facility.pic(8, 'Factory_1F_Jacket1', -684, 302),
-    // Facility.pic(8, 'Factory_1F_Jacket2', -648, 302),
-    // Facility(8, 'Factory_1F_Jacket3', -283, 307),
-    // Facility(8, 'Factory_1F_Jacket4', -269, 307),
-    // Facility(8, 'Factory_1F_Jacket5', 536, 1004),
-    // Facility(8, 'Factory_1F_Jacket6', 572, 1004),
-    // Facility(12, 'Factory_1F_Duffle_Bag1', -573, 357),
-    // Facility(13, 'Factory_1F_Toolbox1', -645, 244),
-    // Facility(13, 'Factory_1F_Toolbox2', 217, 396),
-    // Facility(9, 'Factory_1F_Meds1', 315, -400),
-    // Facility(9, 'Factory_1F_Meds2', 460, -290),
-    // Facility(3, 'Factory_1F_Dead_Scav1', -320, -355),
-    // Facility(15, 'Factory_1F_Locked_Room1', 784, -350),
-    // Facility(15, 'Factory_1F_Locked_Room2', -873, -839),
-    // Facility(15, 'Factory_1F_Locked_Room3', 121, 522),
-    // Facility(15, 'Factory_1F_Locked_Room4', 255, 538),
+    //나무박스
+    Facility(14, 'Customs_2F_Wooden Crate1', 2468, -245),
+    Facility(14, 'Customs_2F_Wooden Crate2', 437, 1013),
+    Facility(14, 'Customs_2F_Wooden Crate3', 425, 1014),
+    Facility(14, 'Customs_2F_Wooden Crate4', 87, 1131),
+    Facility(14, 'Customs_2F_Wooden Crate5', 75, 1102),
+    Facility(14, 'Customs_2F_Wooden Crate6', 61, 1102),
+    //더플백
+    Facility(12, 'Customs_2F_Duffle_Bag1', 193, 1108),
+    Facility(12, 'Customs_2F_Duffle_Bag2', 108, 948),
+    //캐비넷
+    Facility(4, 'Customs_2F_Filing_Cabinet1', 433, 868),
+    Facility(4, 'Customs_2F_Filing_Cabinet2', 372, 825),
+    Facility(4, 'Customs_2F_Filing_Cabinet3', 365, 826),
+    Facility(4, 'Customs_2F_Filing_Cabinet4', -511, -1028),
+    Facility(4, 'Customs_2F_Filing_Cabinet5', -517, -1029),
+    //자켓
+    Facility(8, 'Customs_2F_Jacket1', 2530, -461),
+    Facility(8, 'Customs_2F_Jacket2', 2485, -480),
+    Facility(8, 'Customs_2F_Jacket3', 2478, -294),
+    Facility(8, 'Customs_2F_Jacket4', 2477, -300),
+    Facility(8, 'Customs_2F_Jacket5', 204, 1163),
+    Facility(8, 'Customs_2F_Jacket6', 206, 1173),
+    Facility(8, 'Customs_2F_Jacket7', 191, 1092),
+    Facility(8, 'Customs_2F_Jacket8', 51, 940),
+    Facility(8, 'Customs_2F_Jacket9', 112, 963),
+    Facility(8, 'Customs_2F_Jacket10', 58, 939),
+    Facility(8, 'Customs_2F_Jacket11', 406, 847),
+    Facility(8, 'Customs_2F_Jacket12', 413, 846),
+    Facility(8, 'Customs_2F_Jacket13', 449, 1006),
+    Facility(8, 'Customs_2F_Jacket14', 357, 992),
+    Facility(8, 'Customs_2F_Jacket15', 444, 1006),
+    Facility(8, 'Customs_2F_Jacket16', 351, 992),
+    //의약품
+    Facility(9, 'Customs_2F_Meds1', 2505, -493),
+    Facility(9, 'Customs_2F_Meds2', 284, -882),
+    Facility(9, 'Customs_2F_Meds3', 197, -805),
+    //본체
+    Facility(10, 'Customs_2F_PC1', 38, 976),
+    Facility(10, 'Customs_2F_PC2', 2498, -422),
+    Facility(10, 'Customs_2F_PC3', 2482, -420),
+    //음식 상자
+    Facility(11, 'Customs_2F_Ration_Crate1', 185, -590),
+    //금고
+    Facility(2, 'Customs_2F_Safe1', 85, 1193),
+    Facility(2, 'Customs_2F_Safe2', 50, 947),
+    //공구 박스
+    Facility(13, 'Customs_2F_Toolbox1', 264, -728),
+    Facility(13, 'Customs_2F_Toolbox2', 235, -778),
+    Facility(13, 'Customs_2F_Toolbox3', 2417, -495),
+    Facility(13, 'Customs_2F_Toolbox4', 2440, -484),
+    //잠긴 문
+    Facility(15, 'Customs_2F_Locked_Room1', 201, 1119),
+    Facility(15, 'Customs_2F_Locked_Room2', 179, 1122),
+    Facility(15, 'Customs_2F_Locked_Room3', 89, 1186),
+    Facility(15, 'Customs_2F_Locked_Room4', 66, 953),
+    Facility(15, 'Customs_2F_Locked_Room5', 85, 951),
+    Facility(15, 'Customs_2F_Locked_Room6', 404, 887),
+    //무기 박스
+    Facility(5, 'Customs_2F_Weapon_Box1', 1042, -358),
+    Facility(5, 'Customs_2F_Weapon_Box2', 438, 1036),
+    Facility(5, 'Customs_2F_Weapon_Box3', 55, 1094),
+    //바닥 룻
+    Facility(16, 'Customs_2F_Loose_Loot1', 2499, -317), //롤렉스
+    Facility(16, 'Customs_2F_Loose_Loot2', 2487, -417), //글카
+    Facility(16, 'Customs_2F_Loose_Loot3', -511, -989), //인텔
+    Facility(16, 'Customs_2F_Loose_Loot4', -506, -1012), //인텔
+    Facility(16, 'Customs_2F_Loose_Loot5', -516, -961), //인텔
+    Facility(16, 'Customs_2F_Loose_Loot6', -523, -928), //인텔
+    Facility(16, 'Customs_2F_Loose_Loot7', -533, -949), //인텔
+    Facility(16, 'Customs_2F_Loose_Loot8', -527, -979), //인텔
+    Facility(16, 'Customs_2F_Loose_Loot9', 2453, -312), //귀금속
+    Facility(16, 'Customs_2F_Loose_Loot4', 2479, -247), //수리 키트
   ];
 
   @override
@@ -504,7 +547,7 @@ class _Customs2FState extends State<Customs2F> {
         point15.add(data);
         return facility.picture ? MyApp.lockedRoomPinPic : MyApp.lockedRoomPin;
       case 16:
-        point15.add(data);
+        point16.add(data);
         return facility.picture ? MyApp.looseLootPinPic : MyApp.looseLootPin;
 
       default:

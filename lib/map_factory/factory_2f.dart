@@ -476,7 +476,7 @@ class _Factory2FState extends State<Factory2F> {
         point15.add(data);
         return facility.picture ? MyApp.lockedRoomPinPic : MyApp.lockedRoomPin;
       case 16:
-        point15.add(data);
+        point16.add(data);
         return facility.picture ? MyApp.looseLootPinPic : MyApp.looseLootPin;
 
       default:

@@ -17,10 +17,16 @@ class CustomsB1 extends StatefulWidget {
   final String title;
 
   final List<Facility> _facilityList = [
-    // Facility(13, 'Factory_B1_Toolbox1', 575, -152),
-    // Facility.pic(6, 'Factory_B1_Grenade_Box1', 233, -107),
-    // Facility(14, 'Factory_B1_Wooden_Crate', 181, -273),
-    // Facility(15, 'Factory_B1_Locked_Room', 492, 867),
+    //캐비넷
+    Facility(12, 'Customs_B1_Duffle_Bag1', 1106, -218),
+    //의약품
+    Facility(9, 'Customs_B1_Meds1', 1016, -377),
+    //잠긴 문
+    Facility(15, 'Customs_B1_Locked_Room1', 211, -921),
+    //무기 박스
+    Facility(5, 'Customs_B1_Weapon_Box1', 1120, -222),
+    //바닥 룻
+    Facility(16, 'Customs_B1_Loose_Loot1', 1139, -224), //귀금속
   ];
 
   @override
@@ -472,7 +478,7 @@ class _CustomsB1State extends State<CustomsB1> {
         point15.add(data);
         return facility.picture ? MyApp.lockedRoomPinPic : MyApp.lockedRoomPin;
       case 16:
-        point15.add(data);
+        point16.add(data);
         return facility.picture ? MyApp.looseLootPinPic : MyApp.looseLootPin;
 
       default:

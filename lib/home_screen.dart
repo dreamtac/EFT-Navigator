@@ -3,6 +3,7 @@ import 'package:testamp/map_customs/customs_full_map.dart';
 
 import 'package:testamp/map_factory/factory_full_map.dart';
 import 'package:flutter/services.dart';
+import 'package:testamp/map_interchange/interchange_1f.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,6 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
               title: 'Factory',
               page: FactoryFullMap(
                 title: 'Factory',
+              ),
+            ),
+            HomeToMap(
+              title: 'Interchange',
+              page: Interchange_1F(
+                title: 'Interchange',
               ),
             ),
           ],
