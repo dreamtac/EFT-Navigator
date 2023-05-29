@@ -1,16 +1,6 @@
-# testamp
+"Escape From Tarkov" 게임의 지도를 구현한 애플리케이션 입니다.
 
-A new Flutter project.
+최대한 지형을 알아보기 쉽도록 지도를 단순하지만 명료하게 새로 그렸습니다.
+각 층수 마다 따로 그렸으며, 오른쪽의 화살표를 클릭하여 층수를 변경할 수 있습니다.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+찾으려 하는 루팅박스를 쉽게 찾을 수 있도록 필터 기능이 있습니다.
