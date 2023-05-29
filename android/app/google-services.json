@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1056670303606",
+    "project_id": "eftnavi",
+    "storage_bucket": "eftnavi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056670303606:android:cc288445d06a2ebab9a657",
+        "android_client_info": {
+          "package_name": "com.fd.eft_navigator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056670303606-06b6ha7r334bkg4dg8f0uk374cilm4rl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBEysqTJG0vuk0XEmVhT5GDrarnhJCxqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056670303606-06b6ha7r334bkg4dg8f0uk374cilm4rl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

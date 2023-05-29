@@ -6,51 +6,235 @@ import 'package:image_overlay_map/image_overlay_map.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
+import 'package:testamp/map_interchange/interchange_3f.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
 import 'package:testamp/widgets/facility_model.dart';
 
-class Factory3F extends StatefulWidget {
-  Factory3F({
+class Interchange_2F extends StatefulWidget {
+  Interchange_2F({
     Key? key,
     required this.title,
   }) : super(key: key);
   final Size ENABLE_ICON_SIZE = MyApp.ENABLE_ICON_SIZE;
   final Size DISABLE_ICON_SIZE = MyApp.DISABLE_ICON_SIZE;
   final double NORMAL_ICON_SIZE = MyApp.NORMAL_ICON_SIZE;
+
   final String title;
 
   final List<Facility> _facilityList = [
-    Facility(2, 'Factory_3F_Safe1', -655, 218),
-    Facility(8, 'Factory_3F_Jacket1', -556, 378),
-    Facility(8, 'Factory_3F_Jacket2', -555, 202),
-    Facility(8, 'Factory_3F_Jacket3', -555, 188),
-    Facility(4, 'Factory_3F_Filing_Cabinet1', -558, 103),
-    Facility(4, 'Factory_3F_Filing_Cabinet2', -558, 91),
-    Facility(15, 'Factory_3F_Locked_Room1', -548, 357),
+    //탄 박스
+    Facility(7, 'Interchange_2F_Ammo_Box1', 1887, -654),
+    Facility(7, 'Interchange_2F_Ammo_Box2', 644, -428),
+    Facility(7, 'Interchange_2F_Ammo_Box3', -235, -1288),
+    Facility(7, 'Interchange_2F_Ammo_Box4', -251, -1653),
+    //나무 박스
+    Facility(14, 'Interchange_2F_Wooden_Crate1', 645, 1900),
+    Facility(14, 'Interchange_2F_Wooden_Crate2', 1119, 526),
+    Facility(14, 'Interchange_2F_Wooden_Crate3', 1478, 261),
+    //죽은 스캐브
+    Facility(3, 'Interchange_2F_Dead_Scav1', 135, 1383),
+    //더플 백
+    Facility(12, 'Interchange_2F_Duffle_Bag1', 417, 2475),
+    Facility(12, 'Interchange_2F_Duffle_Bag2', 735, 1997),
+    Facility(12, 'Interchange_2F_Duffle_Bag3', 784, 1979),
+    Facility(12, 'Interchange_2F_Duffle_Bag4', 1402, 1840),
+    Facility(12, 'Interchange_2F_Duffle_Bag5', 591, 1459),
+    Facility(12, 'Interchange_2F_Duffle_Bag6', 1901, 1287),
+    Facility(12, 'Interchange_2F_Duffle_Bag7', 1783, 1076),
+    Facility(12, 'Interchange_2F_Duffle_Bag8', 2018, 819),
+    Facility(12, 'Interchange_2F_Duffle_Bag9', 1461, 995),
+    Facility(12, 'Interchange_2F_Duffle_Bag10', 383, 1024),
+    Facility(12, 'Interchange_2F_Duffle_Bag11', 239, 1076),
+    Facility(12, 'Interchange_2F_Duffle_Bag12', 406, 833),
+    Facility(12, 'Interchange_2F_Duffle_Bag13', 260, 468),
+    Facility(12, 'Interchange_2F_Duffle_Bag14', 73, 239),
+    Facility(12, 'Interchange_2F_Duffle_Bag15', 287, 82),
+    Facility(12, 'Interchange_2F_Duffle_Bag16', 6, 1646),
+    Facility(12, 'Interchange_2F_Duffle_Bag17', 1092, -253),
+    Facility(12, 'Interchange_2F_Duffle_Bag18', 725, -388),
+    Facility(12, 'Interchange_2F_Duffle_Bag19', 1003, -500),
+    Facility(12, 'Interchange_2F_Duffle_Bag20', 1069, -554),
+    Facility(12, 'Interchange_2F_Duffle_Bag21', 1113, -548),
+    Facility(12, 'Interchange_2F_Duffle_Bag22', 1659, -573),
+    Facility(12, 'Interchange_2F_Duffle_Bag23', 505, -531),
+    Facility(12, 'Interchange_2F_Duffle_Bag24', 282, -591),
+    Facility(12, 'Interchange_2F_Duffle_Bag25', 123, -741),
+    Facility(12, 'Interchange_2F_Duffle_Bag26', 961, -832),
+    Facility(12, 'Interchange_2F_Duffle_Bag27', 1299, -837),
+    Facility(12, 'Interchange_2F_Duffle_Bag28', 1432, -1088),
+    Facility(12, 'Interchange_2F_Duffle_Bag29', 1675, -1248),
+    Facility(12, 'Interchange_2F_Duffle_Bag30', 674, -1365),
+    Facility(12, 'Interchange_2F_Duffle_Bag31', 375, -1304),
+    Facility(12, 'Interchange_2F_Duffle_Bag32', -56, -178),
+    Facility(12, 'Interchange_2F_Duffle_Bag33', -354, -713),
+    Facility(12, 'Interchange_2F_Duffle_Bag34', -126, -1441),
+    Facility(12, 'Interchange_2F_Duffle_Bag35', -218, -1655),
+    Facility(12, 'Interchange_2F_Duffle_Bag36', -100, 2090),
+    Facility(12, 'Interchange_2F_Duffle_Bag37', -216, 866),
+    Facility(12, 'Interchange_2F_Duffle_Bag38', -353, 738),
+    Facility(12, 'Interchange_2F_Duffle_Bag39', -216, 643),
+    //캐비넷
+    Facility(4, 'Interchange_2F_Filing_Cabinet1', -18, 179),
+    Facility(4, 'Interchange_2F_Filing_Cabinet2', -18, 163),
+    Facility(4, 'Interchange_2F_Filing_Cabinet3', -18, 147),
+    //수류탄 박스
+    Facility(6, 'Interchange_2F_Grenade_Box1', 2053, 397),
+    Facility(6, 'Interchange_2F_Grenade_Box2', 2010, -695),
+    Facility(6, 'Interchange_2F_Grenade_Box3', 628, -1452),
+    //자켓
+    Facility(8, 'Interchange_2F_Jacket1', 204, 913),
+    Facility(8, 'Interchange_2F_Jacket2', 285, 913),
+    Facility(8, 'Interchange_2F_Jacket3', 405, 793),
+    Facility(8, 'Interchange_2F_Jacket4', 683, 680),
+    Facility(8, 'Interchange_2F_Jacket5', 675, 590),
+    Facility(8, 'Interchange_2F_Jacket6', 416, 579),
+    Facility(8, 'Interchange_2F_Jacket7', 244, 468),
+    Facility(8, 'Interchange_2F_Jacket8', 49, 190),
+    Facility(8, 'Interchange_2F_Jacket9', 194, 113),
+    Facility(8, 'Interchange_2F_Jacket10', 197, 91),
+    Facility(8, 'Interchange_2F_Jacket11', 775, 40),
+    Facility(8, 'Interchange_2F_Jacket12', 315, -98),
+    Facility(8, 'Interchange_2F_Jacket13', 308, -98),
+    Facility(8, 'Interchange_2F_Jacket14', 392, -152),
+    Facility(8, 'Interchange_2F_Jacket15', 1174, -582),
+    //의약품
+    Facility(9, 'Interchange_2F_Meds1', 392, 793),
+    Facility(9, 'Interchange_2F_Meds2', 214, 775),
+    Facility(9, 'Interchange_2F_Meds3', 230, 554),
+    Facility(9, 'Interchange_2F_Meds4', 444, 460),
+    //PC
+    Facility(10, 'Interchange_2F_PC1', 509, 2481),
+    Facility(10, 'Interchange_2F_PC2', 546, 2426),
+    Facility(10, 'Interchange_2F_PC3', 491, 2403),
+    Facility(10, 'Interchange_2F_PC4', 1073, 1272),
+    Facility(10, 'Interchange_2F_PC5', 1176, 1257),
+    Facility(10, 'Interchange_2F_PC6', 1176, 1220),
+    Facility(10, 'Interchange_2F_PC7', 1176, 1188),
+    Facility(10, 'Interchange_2F_PC8', 1176, 1163),
+    Facility(10, 'Interchange_2F_PC9', 1185, -472),
+    Facility(10, 'Interchange_2F_PC10', 1113, -474),
+    Facility(10, 'Interchange_2F_PC11', 1167, -504),
+    Facility(10, 'Interchange_2F_PC12', 1168, -521),
+    Facility(10, 'Interchange_2F_PC13', 1169, -542),
+    Facility(10, 'Interchange_2F_PC14', 1210, -944),
+    Facility(10, 'Interchange_2F_PC15', 1287, -950),
+    Facility(10, 'Interchange_2F_PC16', 1211, -980),
+    Facility(10, 'Interchange_2F_PC17', 1270, -1001),
+    Facility(10, 'Interchange_2F_PC18', 1169, -1059),
+    Facility(10, 'Interchange_2F_PC19', 1352, -1055),
+    Facility(10, 'Interchange_2F_PC20', 1359, -1105),
+    Facility(10, 'Interchange_2F_PC21', 1345, -1120),
+    Facility(10, 'Interchange_2F_PC22', 1290, -1126),
+    Facility(10, 'Interchange_2F_PC23', 1313, -1239),
+    Facility(10, 'Interchange_2F_PC24', 870, -1210),
+    Facility(10, 'Interchange_2F_PC25', 903, -1237),
+    Facility(10, 'Interchange_2F_PC26', 155, -932),
+    Facility(10, 'Interchange_2F_PC27', 177, -973),
+    Facility(10, 'Interchange_2F_PC28', 153, -1381),
+    Facility(10, 'Interchange_2F_PC29', 181, -1379),
+    Facility(10, 'Interchange_2F_PC30', -131, -1495),
+    Facility(10, 'Interchange_2F_PC31', -211, -1539),
+    Facility(10, 'Interchange_2F_PC32', -245, -1464),
+    Facility(10, 'Interchange_2F_PC33', -269, -1231),
+    Facility(10, 'Interchange_2F_PC34', -231, -1207),
+    Facility(10, 'Interchange_2F_PC35', -145, -1172),
+    Facility(10, 'Interchange_2F_PC36', -268, -1134),
+    Facility(10, 'Interchange_2F_PC37', -154, -1069),
+    Facility(10, 'Interchange_2F_PC38', -266, -981),
+    //공구 박스
+    Facility(13, 'Interchange_2F_Toolbox1', 1423, 2475),
+    Facility(13, 'Interchange_2F_Toolbox2', 1495, 1781),
+    Facility(13, 'Interchange_2F_Toolbox3', 1408, 1626),
+    Facility(13, 'Interchange_2F_Toolbox4', 1446, 1476),
+    Facility(13, 'Interchange_2F_Toolbox5', 1701, 1210),
+    Facility(13, 'Interchange_2F_Toolbox6', 1948, 891),
+    Facility(13, 'Interchange_2F_Toolbox7', 2050, 130),
+    Facility(13, 'Interchange_2F_Toolbox8', 524, 1690),
+    Facility(13, 'Interchange_2F_Toolbox9', 333, 1051),
+    Facility(13, 'Interchange_2F_Toolbox10', 86, 951),
+    Facility(13, 'Interchange_2F_Toolbox11', 229, 246),
+    Facility(13, 'Interchange_2F_Toolbox12', 2005, -27),
+    Facility(13, 'Interchange_2F_Toolbox13', 1944, -351),
+    Facility(13, 'Interchange_2F_Toolbox14', 1647, -940),
+    Facility(13, 'Interchange_2F_Toolbox15', 1269, -1290),
+    Facility(13, 'Interchange_2F_Toolbox16', 1138, -1692),
+    //무기 박스
+    Facility(5, 'Interchange_2F_Weapon_Box1', 77, 2493),
+    Facility(5, 'Interchange_2F_Weapon_Box2', 882, 978),
+    Facility(5, 'Interchange_2F_Weapon_Box3', 1637, 910),
+    Facility(5, 'Interchange_2F_Weapon_Box4', 64, 667),
+    Facility(5, 'Interchange_2F_Weapon_Box5', 691, 611),
+    Facility(5, 'Interchange_2F_Weapon_Box6', 1967, 574),
+    Facility(5, 'Interchange_2F_Weapon_Box7', 2134, 583),
+    Facility(5, 'Interchange_2F_Weapon_Box8', 1635, 345),
+    Facility(5, 'Interchange_2F_Weapon_Box9', 1817, 350),
+    Facility(5, 'Interchange_2F_Weapon_Box10', 826, 73),
+    Facility(5, 'Interchange_2F_Weapon_Box11', 695, 29),
+    Facility(5, 'Interchange_2F_Weapon_Box12', 677, 11),
+    Facility(5, 'Interchange_2F_Weapon_Box13', 615, -11),
+    Facility(5, 'Interchange_2F_Weapon_Box14', 677, -11),
+    Facility(5, 'Interchange_2F_Weapon_Box15', 936, -23),
+    Facility(5, 'Interchange_2F_Weapon_Box16', 213, -65),
+    Facility(5, 'Interchange_2F_Weapon_Box17', 716, -49),
+    Facility(5, 'Interchange_2F_Weapon_Box18', 732, -49),
+    Facility(5, 'Interchange_2F_Weapon_Box19', 749, -49),
+    Facility(5, 'Interchange_2F_Weapon_Box20', 241, -341),
+    Facility(5, 'Interchange_2F_Weapon_Box21', 1114, -240),
+    Facility(5, 'Interchange_2F_Weapon_Box22', 1089, -475),
+    Facility(5, 'Interchange_2F_Weapon_Box23', 1220, -512),
+    Facility(5, 'Interchange_2F_Weapon_Box24', 1652, -509),
+    Facility(5, 'Interchange_2F_Weapon_Box25', 1069, -692),
+    Facility(5, 'Interchange_2F_Weapon_Box26', 1659, -709),
+    Facility(5, 'Interchange_2F_Weapon_Box27', 1662, -713),
+    Facility(5, 'Interchange_2F_Weapon_Box28', 1705, -682),
+    Facility(5, 'Interchange_2F_Weapon_Box29', 2100, -766),
+    Facility(5, 'Interchange_2F_Weapon_Box30', 663, -1185),
+    Facility(5, 'Interchange_2F_Weapon_Box31', 1753, -1874),
+    Facility(5, 'Interchange_2F_Weapon_Box32', -219, -1540),
+    //잠긴 문
+    Facility(15, 'Interchange_2F_Locked_Room1', 204, 811),
+    Facility(15, 'Interchange_2F_Locked_Room2', 309, 853),
+    Facility(15, 'Interchange_2F_Locked_Room3', 448, 809),
+    Facility(15, 'Interchange_2F_Locked_Room4', 582, 154),
+    Facility(15, 'Interchange_2F_Locked_Room5', 599, 154),
+    Facility(15, 'Interchange_2F_Locked_Room6', 1373, -814),
+    Facility(15, 'Interchange_2F_Locked_Room7', -228, -1017),
+    Facility(15, 'Interchange_2F_Locked_Room8', -217, -1115),
+    //바닥 룻
+    Facility(16, 'Interchange_2F_Loose_Loot1', 462, 601), //레덱스
+    Facility(16, 'Interchange_2F_Loose_Loot2', 1910, 331), //레덱스
+    Facility(16, 'Interchange_2F_Loose_Loot3', 649, 2444), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot4', 491, 2444), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot5', 294, 1975), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot6', 284, 980), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot7', 272, 780), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot8', 647, 564), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot9', 326, -338), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot10', 425, -418), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot11', -8, -476), //고급 전자 제품
+    Facility(16, 'Interchange_2F_Loose_Loot12', 1478, 1238), //고샨 음식 스폰
+    Facility(16, 'Interchange_2F_Loose_Loot13', 1087, -98), //고급 귀금속
   ];
 
   @override
-  _Factory3FState createState() => _Factory3FState();
+  _Interchange_2FState createState() => _Interchange_2FState();
 }
 
-class _Factory3FState extends State<Factory3F> {
-  String imageName = 'factory_3F.png';
-  var size = const Size(6000.0, 6000.0);
-  final List<bool> selections = List.generate(16, (index) => true);
+class _Interchange_2FState extends State<Interchange_2F> {
   bool allToggle = true;
   bool _filterVisible = MyApp.filterToggle;
+  final List<bool> selections = List.generate(16, (index) => true);
+  var size = const Size(8000.0, 8000.0);
+  String imageName = 'interchange_2F.png';
 
-  // Future<Image> downloadMap() async {
-  //   final ref = FirebaseStorage.instance.ref().child('Customs/$imageName');
-  //   final directory = await getApplicationDocumentsDirectory();
-  //   final path = directory.path;
-  //   if (await File('$path/$imageName').exists()) {
-  //     return Image.file(File('$path/$imageName'));
-  //   } else {
-  //     await ref.writeToFile(File('$path/$imageName'));
-  //     return Image.file(File('$path/$imageName'));
-  //   }
-  // }
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.initState();
+  }
 
   late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
       point2 = [], //돈통, 금고 Cash register, Safe
@@ -65,7 +249,7 @@ class _Factory3FState extends State<Factory3F> {
       point11 = [], //음식 상자 Ration Crate
       point12 = [], //더플백 Duffle Bag
       point13 = [], //공구 박스 Toolbox
-      point14 = [], //나무 박스 Wooden crate
+      point14 = [], //나무 박스 Wooden Crate
       point15 = [], //잠긴 문 Locked Room
       point16 = []; //바닥 룻 Loose Loot
 
@@ -281,15 +465,6 @@ class _Factory3FState extends State<Factory3F> {
   }
 
   @override
-  void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -329,7 +504,7 @@ class _Factory3FState extends State<Factory3F> {
                 child: Column(
                   children: [
                     FloatingActionButton.small(
-                      //heroTag: 'Filter All',
+                      heroTag: 'Filter All',
                       onPressed: () => pressAllButton(),
                       backgroundColor:
                           allToggle ? Colors.green[200] : Colors.black38,
@@ -386,7 +561,7 @@ class _Factory3FState extends State<Factory3F> {
                             MyApp.toolBox, //공구 박스 Toolbox
                             MyApp.woodenCrate, //나무 박스 Wooden crate
                             MyApp.lockedRoom, //잠긴 문 Locked Room
-                            MyApp.looseLoot, //바닥 룻 Loose Loot//바닥 룻 Loose Loot
+                            MyApp.looseLoot, //바닥 룻 Loose Loot
                           ],
                         ),
                       ),
@@ -406,15 +581,20 @@ class _Factory3FState extends State<Factory3F> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FloatingFloorButton.isNull(
+                  FloatingFloorButton(
+                    movePage: () => inToBuilding(
+                        Interchange_3F(
+                          title: 'Interchange 2F',
+                        ),
+                        const Offset(0.0, -1.0)),
                     up: true,
-                    heroTag: 'Factory 3F',
+                    heroTag: 'Interchange 2F',
                   ),
-                  const TextFloor(floor: 3),
+                  const TextFloor(floor: 2),
                   FloatingFloorButton(
                     movePage: () => Navigator.pop(context, _filterVisible),
                     up: false,
-                    heroTag: 'Factory 2F',
+                    heroTag: 'Interchange 1F',
                   ),
                 ],
               ),
@@ -437,9 +617,7 @@ class _Factory3FState extends State<Factory3F> {
   }
 
   Widget _getMarkerWidget(double scale, MarkerModel data) {
-    if (scale > 3) {
-      print('enLarge');
-    }
+    if (scale > 3) {}
     Facility facility = data.data;
     switch (facility.facilityId) {
       case 1:
@@ -508,14 +686,24 @@ class _Factory3FState extends State<Factory3F> {
     );
   }
 
+  _createToggleButton2(Icon icon) {
+    return icon;
+  }
+
   _onMarkerClicked(MarkerModel markerModel) {
     print((markerModel.data as Facility).name);
     if ((markerModel.data as Facility).name == 'Dorm') {
       inToBuilding(Dorm01(title: '3Story Dorm 1F'), const Offset(1.0, 0.0));
-    } else if ((markerModel.data as Facility).name == 'facility1') {
-      return popDialog('tarkov02');
     }
     if ((markerModel.data as Facility).picture) {
+      if ((markerModel.data as Facility).name == 'Factory_1F_Wooden_Crate5') {
+        return popDialog('Factory_1F_Wooden_Crate4');
+      } else if ((markerModel.data as Facility).name ==
+          'Factory_1F_Wooden_Crate2') {
+        return popDialog('Factory_1F_Jacket1');
+      } else if ((markerModel.data as Facility).name == 'Factory_1F_Jacket2') {
+        return popDialog('Factory_1F_Jacket1');
+      }
       return popDialog((markerModel.data as Facility).name);
     }
   }
@@ -549,11 +737,12 @@ class _Factory3FState extends State<Factory3F> {
 
   Future<MapContainer> _loadImage() async {
     final path = (await getApplicationDocumentsDirectory()).path;
+    print('$path/$imageName');
     final MapContainer map = MapContainer(
-      // Image.asset('assets/images/factory_3F.png'),
+      //Image.asset('assets/images/interchange_2F.png'),
       Image.file(File('$path/$imageName')),
       size,
-      markers: _getMarker(widget._facilityList, 6000.0, 6000.0),
+      markers: _getMarker(widget._facilityList, 8000.0, 8000.0),
       markerWidgetBuilder: _getMarkerWidget,
       onMarkerClicked: _onMarkerClicked,
       onTab: _onTab(size),

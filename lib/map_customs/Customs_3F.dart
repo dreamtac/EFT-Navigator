@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_overlay_map/image_overlay_map.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
@@ -40,6 +43,12 @@ class Customs3F extends StatefulWidget {
 }
 
 class _Customs3FState extends State<Customs3F> {
+  String imageName = 'customs_3F.png';
+  bool allToggle = true;
+  bool _filterVisible = MyApp.filterToggle;
+  final List<bool> selections = List.generate(16, (index) => true);
+  var size = const Size(8000.0, 8000.0);
+
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
@@ -49,8 +58,6 @@ class _Customs3FState extends State<Customs3F> {
     super.initState();
   }
 
-  bool allToggle = true;
-  bool _filterVisible = MyApp.filterToggle;
   late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
       point2 = [], //돈통, 금고 Cash register, Safe
       point3 = [], //죽은 스캐브 Dead Scav
@@ -67,6 +74,7 @@ class _Customs3FState extends State<Customs3F> {
       point14 = [], //나무 박스 Wooden Crate
       point15 = [], //잠긴 문 Locked Room
       point16 = []; //바닥 룻 Loose Loot
+
   void lootFilter(int index) {
     setState(() {
       if (index == 0) {
@@ -251,7 +259,6 @@ class _Customs3FState extends State<Customs3F> {
     });
   }
 
-  final List<bool> selections = List.generate(16, (index) => true);
   void pressFilterButton() {
     setState(() {
       MyApp.filterToggle = !MyApp.filterToggle;
@@ -279,7 +286,6 @@ class _Customs3FState extends State<Customs3F> {
     }
   }
 
-  var size = const Size(8000.0, 8000.0);
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -547,15 +553,16 @@ class _Customs3FState extends State<Customs3F> {
   _onTab(Size size) {}
 
   Future<MapContainer> _loadImage() async {
+    final path = (await getApplicationDocumentsDirectory()).path;
     final MapContainer map = MapContainer(
-      Image.asset('assets/images/customs_3F.png'),
+      //Image.asset('assets/images/customs_3F.png'),
+      Image.file(File('$path/$imageName')),
       size,
       markers: _getMarker(widget._facilityList, 8000.0, 8000.0),
       markerWidgetBuilder: _getMarkerWidget,
       onMarkerClicked: _onMarkerClicked,
       onTab: _onTab(size),
     );
-    //await Future.delayed(const Duration(milliseconds: 500));
     return map;
   }
 

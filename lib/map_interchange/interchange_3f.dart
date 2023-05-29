@@ -9,48 +9,67 @@ import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
 import 'package:testamp/widgets/facility_model.dart';
 
-class Factory3F extends StatefulWidget {
-  Factory3F({
+class Interchange_3F extends StatefulWidget {
+  Interchange_3F({
     Key? key,
     required this.title,
   }) : super(key: key);
   final Size ENABLE_ICON_SIZE = MyApp.ENABLE_ICON_SIZE;
   final Size DISABLE_ICON_SIZE = MyApp.DISABLE_ICON_SIZE;
   final double NORMAL_ICON_SIZE = MyApp.NORMAL_ICON_SIZE;
+
   final String title;
 
   final List<Facility> _facilityList = [
-    Facility(2, 'Factory_3F_Safe1', -655, 218),
-    Facility(8, 'Factory_3F_Jacket1', -556, 378),
-    Facility(8, 'Factory_3F_Jacket2', -555, 202),
-    Facility(8, 'Factory_3F_Jacket3', -555, 188),
-    Facility(4, 'Factory_3F_Filing_Cabinet1', -558, 103),
-    Facility(4, 'Factory_3F_Filing_Cabinet2', -558, 91),
-    Facility(15, 'Factory_3F_Locked_Room1', -548, 357),
+    //더플 백
+    Facility(12, 'Interchange_3F_Duffle_Bag1', 289, 1176),
+    Facility(12, 'Interchange_3F_Duffle_Bag2', 937, 410),
+    Facility(12, 'Interchange_3F_Duffle_Bag3', 420, 17),
+    Facility(12, 'Interchange_3F_Duffle_Bag4', 95, -708),
+    //자켓
+    Facility(8, 'Interchange_3F_Jacket1', -386, 356),
+    //의약품
+    Facility(9, 'Interchange_3F_Meds1', -15, 1035),
+    //PC
+    Facility(10, 'Interchange_3F_PC1', -22, 1159),
+    //공구 상자
+    Facility(13, 'Interchange_3F_Tool_Box1', 696, 578),
+    Facility(13, 'Interchange_3F_Tool_Box2', -311, 1041),
+    //무기 박스
+    Facility(5, 'Interchange_3F_Weapon_Box1', 471, 1276),
+    Facility(5, 'Interchange_3F_Weapon_Box2', 646, 1255),
+    Facility(5, 'Interchange_3F_Weapon_Box3', 357, 1087),
+    Facility(5, 'Interchange_3F_Weapon_Box4', 631, 731),
+    Facility(5, 'Interchange_3F_Weapon_Box5', 644, -547),
+    Facility(5, 'Interchange_3F_Weapon_Box6', 595, -547),
+    //잠긴 문
+    Facility(15, 'Interchange_3F_Locked_Room1', 945, 959),
+    Facility(15, 'Interchange_3F_Locked_Room2', -82, -472),
+    //바닥 룻
+    Facility(16, 'Interchange_3F_Loose_Loot1', -52, -471), //레덱스
+    Facility(16, 'Interchange_3F_Loose_Loot2', 0, 1078), //레덱스
+    Facility(16, 'Interchange_3F_Loose_Loot3', -319, -569), //고급 전자 제품
   ];
 
   @override
-  _Factory3FState createState() => _Factory3FState();
+  _Interchange_3FState createState() => _Interchange_3FState();
 }
 
-class _Factory3FState extends State<Factory3F> {
-  String imageName = 'factory_3F.png';
-  var size = const Size(6000.0, 6000.0);
-  final List<bool> selections = List.generate(16, (index) => true);
+class _Interchange_3FState extends State<Interchange_3F> {
   bool allToggle = true;
   bool _filterVisible = MyApp.filterToggle;
+  final List<bool> selections = List.generate(16, (index) => true);
+  var size = const Size(8000.0, 8000.0);
+  String imageName = 'interchange_3F.png';
 
-  // Future<Image> downloadMap() async {
-  //   final ref = FirebaseStorage.instance.ref().child('Customs/$imageName');
-  //   final directory = await getApplicationDocumentsDirectory();
-  //   final path = directory.path;
-  //   if (await File('$path/$imageName').exists()) {
-  //     return Image.file(File('$path/$imageName'));
-  //   } else {
-  //     await ref.writeToFile(File('$path/$imageName'));
-  //     return Image.file(File('$path/$imageName'));
-  //   }
-  // }
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.initState();
+  }
 
   late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
       point2 = [], //돈통, 금고 Cash register, Safe
@@ -65,7 +84,7 @@ class _Factory3FState extends State<Factory3F> {
       point11 = [], //음식 상자 Ration Crate
       point12 = [], //더플백 Duffle Bag
       point13 = [], //공구 박스 Toolbox
-      point14 = [], //나무 박스 Wooden crate
+      point14 = [], //나무 박스 Wooden Crate
       point15 = [], //잠긴 문 Locked Room
       point16 = []; //바닥 룻 Loose Loot
 
@@ -281,15 +300,6 @@ class _Factory3FState extends State<Factory3F> {
   }
 
   @override
-  void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -329,7 +339,7 @@ class _Factory3FState extends State<Factory3F> {
                 child: Column(
                   children: [
                     FloatingActionButton.small(
-                      //heroTag: 'Filter All',
+                      heroTag: 'Filter All',
                       onPressed: () => pressAllButton(),
                       backgroundColor:
                           allToggle ? Colors.green[200] : Colors.black38,
@@ -386,7 +396,7 @@ class _Factory3FState extends State<Factory3F> {
                             MyApp.toolBox, //공구 박스 Toolbox
                             MyApp.woodenCrate, //나무 박스 Wooden crate
                             MyApp.lockedRoom, //잠긴 문 Locked Room
-                            MyApp.looseLoot, //바닥 룻 Loose Loot//바닥 룻 Loose Loot
+                            MyApp.looseLoot, //바닥 룻 Loose Loot
                           ],
                         ),
                       ),
@@ -408,13 +418,13 @@ class _Factory3FState extends State<Factory3F> {
                 children: [
                   FloatingFloorButton.isNull(
                     up: true,
-                    heroTag: 'Factory 3F',
+                    heroTag: 'Interchange 3F',
                   ),
                   const TextFloor(floor: 3),
                   FloatingFloorButton(
                     movePage: () => Navigator.pop(context, _filterVisible),
                     up: false,
-                    heroTag: 'Factory 2F',
+                    heroTag: 'Interchange 2F',
                   ),
                 ],
               ),
@@ -437,9 +447,7 @@ class _Factory3FState extends State<Factory3F> {
   }
 
   Widget _getMarkerWidget(double scale, MarkerModel data) {
-    if (scale > 3) {
-      print('enLarge');
-    }
+    if (scale > 3) {}
     Facility facility = data.data;
     switch (facility.facilityId) {
       case 1:
@@ -508,14 +516,24 @@ class _Factory3FState extends State<Factory3F> {
     );
   }
 
+  _createToggleButton2(Icon icon) {
+    return icon;
+  }
+
   _onMarkerClicked(MarkerModel markerModel) {
     print((markerModel.data as Facility).name);
     if ((markerModel.data as Facility).name == 'Dorm') {
       inToBuilding(Dorm01(title: '3Story Dorm 1F'), const Offset(1.0, 0.0));
-    } else if ((markerModel.data as Facility).name == 'facility1') {
-      return popDialog('tarkov02');
     }
     if ((markerModel.data as Facility).picture) {
+      if ((markerModel.data as Facility).name == 'Factory_1F_Wooden_Crate5') {
+        return popDialog('Factory_1F_Wooden_Crate4');
+      } else if ((markerModel.data as Facility).name ==
+          'Factory_1F_Wooden_Crate2') {
+        return popDialog('Factory_1F_Jacket1');
+      } else if ((markerModel.data as Facility).name == 'Factory_1F_Jacket2') {
+        return popDialog('Factory_1F_Jacket1');
+      }
       return popDialog((markerModel.data as Facility).name);
     }
   }
@@ -549,11 +567,12 @@ class _Factory3FState extends State<Factory3F> {
 
   Future<MapContainer> _loadImage() async {
     final path = (await getApplicationDocumentsDirectory()).path;
+    print('$path/$imageName');
     final MapContainer map = MapContainer(
-      // Image.asset('assets/images/factory_3F.png'),
+      //Image.asset('assets/images/interchange_3F.png'),
       Image.file(File('$path/$imageName')),
       size,
-      markers: _getMarker(widget._facilityList, 6000.0, 6000.0),
+      markers: _getMarker(widget._facilityList, 8000.0, 8000.0),
       markerWidgetBuilder: _getMarkerWidget,
       onMarkerClicked: _onMarkerClicked,
       onTab: _onTab(size),

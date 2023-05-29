@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:testamp/firebasetest.dart';
 import 'package:testamp/map_customs/customs_full_map.dart';
 
 import 'package:testamp/map_factory/factory_full_map.dart';
 import 'package:flutter/services.dart';
 import 'package:testamp/map_interchange/interchange_1f.dart';
+import 'package:testamp/map_woods/woods_1f.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,26 +26,35 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('EFT Navigator'),
         centerTitle: false,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            HomeToMap(
-              title: 'Customs',
-              page: CustomsFullMap(title: "Customs"),
-            ),
-            HomeToMap(
-              title: 'Factory',
-              page: FactoryFullMap(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              HomeToMap(
+                title: 'Woods',
+                page: Woods_1F(
+                  title: 'Woods',
+                ),
+              ),
+              HomeToMap(
+                title: 'Customs',
+                page: CustomsFullMap(title: "Customs"),
+              ),
+              HomeToMap(
                 title: 'Factory',
+                page: FactoryFullMap(
+                  title: 'Factory',
+                ),
               ),
-            ),
-            HomeToMap(
-              title: 'Interchange',
-              page: Interchange_1F(
+              HomeToMap(
                 title: 'Interchange',
+                page: Interchange_1F(
+                  title: 'Interchange',
+                ),
               ),
-            ),
-          ],
+              HomeToMap(title: 'FBTest', page: FirebaseTest()),
+            ],
+          ),
         ),
       ),
     );

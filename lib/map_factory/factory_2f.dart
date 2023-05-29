@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_overlay_map/image_overlay_map.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/map_customs/dorm/3story_dorm_1.dart';
 import 'package:testamp/map_factory/factory_3f.dart';
@@ -30,8 +33,12 @@ class Factory2F extends StatefulWidget {
 }
 
 class _Factory2FState extends State<Factory2F> {
+  String imageName = 'factory_2F.png';
+  var size = const Size(6000.0, 6000.0);
+  final List<bool> selections = List.generate(16, (index) => true);
   bool allToggle = true;
   bool _filterVisible = MyApp.filterToggle;
+
   late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
       point2 = [], //돈통, 금고 Cash register, Safe
       point3 = [], //죽은 스캐브 Dead Scav
@@ -48,6 +55,7 @@ class _Factory2FState extends State<Factory2F> {
       point14 = [], //나무 박스 Wooden crate
       point15 = [], //잠긴 문 Locked Room
       point16 = []; //바닥 룻 Loose Loot
+
   void lootFilter(int index) {
     setState(() {
       if (index == 0) {
@@ -232,7 +240,6 @@ class _Factory2FState extends State<Factory2F> {
     });
   }
 
-  final List<bool> selections = List.generate(16, (index) => true);
   void pressFilterButton() {
     setState(() {
       MyApp.filterToggle = !MyApp.filterToggle;
@@ -260,7 +267,6 @@ class _Factory2FState extends State<Factory2F> {
     }
   }
 
-  var size = const Size(3690.0, 2660.0);
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
@@ -530,15 +536,16 @@ class _Factory2FState extends State<Factory2F> {
   _onTab(Size size) {}
 
   Future<MapContainer> _loadImage() async {
+    final path = (await getApplicationDocumentsDirectory()).path;
     final MapContainer map = MapContainer(
-      Image.asset('assets/images/factory_2F.png'),
+      //Image.asset('assets/images/factory_2F.png'),
+      Image.file(File('$path/$imageName')),
       size,
-      markers: _getMarker(widget._facilityList, 3690.0, 2660.0),
+      markers: _getMarker(widget._facilityList, 6000.0, 6000.0),
       markerWidgetBuilder: _getMarkerWidget,
       onMarkerClicked: _onMarkerClicked,
       onTab: _onTab(size),
     );
-    //await Future.delayed(const Duration(milliseconds: 500));
     return map;
   }
 

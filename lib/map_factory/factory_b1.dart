@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_overlay_map/image_overlay_map.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/widgets/custom_widgets.dart';
 import 'package:testamp/widgets/facility_model.dart';
@@ -13,7 +16,6 @@ class FactoryB1 extends StatefulWidget {
   final Size ENABLE_ICON_SIZE = MyApp.ENABLE_ICON_SIZE;
   final Size DISABLE_ICON_SIZE = MyApp.DISABLE_ICON_SIZE;
   final double NORMAL_ICON_SIZE = MyApp.NORMAL_ICON_SIZE;
-
   final String title;
 
   final List<Facility> _facilityList = [
@@ -28,8 +30,12 @@ class FactoryB1 extends StatefulWidget {
 }
 
 class _FactoryB1State extends State<FactoryB1> {
+  String imageName = 'factory_B1.png';
+  var size = const Size(6000.0, 6000.0);
+  final List<bool> selections = List.generate(16, (index) => true);
   bool allToggle = true;
   bool _filterVisible = MyApp.filterToggle;
+
   late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
       point2 = [], //돈통, 금고 Cash register, Safe
       point3 = [], //죽은 스캐브 Dead Scav
@@ -46,6 +52,7 @@ class _FactoryB1State extends State<FactoryB1> {
       point14 = [], //나무 박스 Wooden crate
       point15 = [], //잠긴 문 Locked Room
       point16 = []; //바닥 룻 Loose Loot
+
   void lootFilter(int index) {
     setState(() {
       if (index == 0) {
@@ -230,7 +237,6 @@ class _FactoryB1State extends State<FactoryB1> {
     });
   }
 
-  final List<bool> selections = List.generate(16, (index) => true);
   void pressFilterButton() {
     setState(() {
       MyApp.filterToggle = !MyApp.filterToggle;
@@ -257,8 +263,6 @@ class _FactoryB1State extends State<FactoryB1> {
       }
     }
   }
-
-  var size = const Size(3690.0, 2660.0);
 
   @override
   void initState() {
@@ -523,15 +527,16 @@ class _FactoryB1State extends State<FactoryB1> {
   _onTab(Size size) {}
 
   Future<MapContainer> _loadImage() async {
+    final path = (await getApplicationDocumentsDirectory()).path;
     final MapContainer map = MapContainer(
-      Image.asset('assets/images/factory_B1.png'),
+      // Image.asset('assets/images/factory_B1.png'),
+      Image.file(File('$path/$imageName')),
       size,
-      markers: _getMarker(widget._facilityList, 3690.0, 2660.0),
+      markers: _getMarker(widget._facilityList, 6000.0, 6000.0),
       markerWidgetBuilder: _getMarkerWidget,
       onMarkerClicked: _onMarkerClicked,
       onTab: _onTab(size),
     );
-    //await Future.delayed(const Duration(milliseconds: 500));
     return map;
   }
 

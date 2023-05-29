@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_overlay_map/image_overlay_map.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:testamp/main.dart';
 import 'package:testamp/map_customs/Customs_B1.dart';
 import 'package:testamp/map_customs/customs_2F.dart';
@@ -16,7 +20,6 @@ class CustomsFullMap extends StatefulWidget {
   final Size ENABLE_ICON_SIZE = MyApp.ENABLE_ICON_SIZE;
   final Size DISABLE_ICON_SIZE = MyApp.DISABLE_ICON_SIZE;
   final double NORMAL_ICON_SIZE = MyApp.NORMAL_ICON_SIZE;
-
   final String title;
 
   final List<Facility> _facilityList = [
@@ -271,6 +274,42 @@ class CustomsFullMap extends StatefulWidget {
 }
 
 class _CustomsFullMapState extends State<CustomsFullMap> {
+  bool _filterVisible = MyApp.filterToggle;
+  bool allToggle = true;
+  final List<bool> selections = List.generate(16, (index) => true);
+  var size = const Size(8000.0, 8000.0);
+  String imageName = 'customs_1F.png';
+  String imageName2 = 'customs_2F.png';
+  String imageName3 = 'customs_3F.png';
+  String imageName4 = 'customs_B1.png';
+
+  Future<Image> downloadMap() async {
+    final ref = FirebaseStorage.instance.ref().child('Customs/$imageName');
+    final ref2 = FirebaseStorage.instance.ref().child('Customs/$imageName2');
+    final ref3 = FirebaseStorage.instance.ref().child('Customs/$imageName3');
+    final ref4 = FirebaseStorage.instance.ref().child('Customs/$imageName4');
+
+    final directory = await getApplicationDocumentsDirectory();
+    final path = directory.path;
+
+    if (!await File('$path/$imageName2').exists()) {
+      await ref2.writeToFile(File('$path/$imageName2'));
+    }
+    if (!await File('$path/$imageName3').exists()) {
+      await ref3.writeToFile(File('$path/$imageName3'));
+    }
+    if (!await File('$path/$imageName4').exists()) {
+      await ref4.writeToFile(File('$path/$imageName4'));
+    }
+
+    if (await File('$path/$imageName').exists()) {
+      return Image.file(File('$path/$imageName'));
+    } else {
+      await ref.writeToFile(File('$path/$imageName'));
+      return Image.file(File('$path/$imageName'));
+    }
+  }
+
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
@@ -286,8 +325,6 @@ class _CustomsFullMapState extends State<CustomsFullMap> {
     super.dispose();
   }
 
-  bool allToggle = true;
-  bool _filterVisible = MyApp.filterToggle;
   late List<MarkerModel> point1 = [], //히든 스태쉬 Hidden Stash
       point2 = [], //돈통, 금고 Cash register, Safe
       point3 = [], //죽은 스캐브 Dead Scav
@@ -489,7 +526,6 @@ class _CustomsFullMapState extends State<CustomsFullMap> {
     });
   }
 
-  final List<bool> selections = List.generate(16, (index) => true);
   void pressFilterButton() {
     setState(() {
       MyApp.filterToggle = !MyApp.filterToggle;
@@ -517,141 +553,160 @@ class _CustomsFullMapState extends State<CustomsFullMap> {
     }
   }
 
-  var size = const Size(8000.0, 8000.0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          FutureBuilder<MapContainer>(
-            future: _loadImage(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return MapContainer(
-                  snapshot.data!.child,
-                  snapshot.data!.size,
-                  markers: snapshot.data!.markers,
-                  markerWidgetBuilder: snapshot.data!.markerWidgetBuilder,
-                  onMarkerClicked: snapshot.data!.onMarkerClicked,
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
-          Positioned(
-            left: 10,
-            right: 10,
-            bottom: 10,
-            child: AnimatedOpacity(
-              opacity: _filterVisible ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 350),
-              child: Column(
-                children: [
-                  FloatingActionButton.small(
-                    heroTag: 'Filter All',
-                    onPressed: () => pressAllButton(),
-                    backgroundColor:
-                        allToggle ? Colors.green[200] : Colors.black38,
-                    foregroundColor:
-                        allToggle ? Colors.white : Colors.green[400],
-                    child: MyApp.allFilter,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black38,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: ToggleButtons(
-                        borderRadius:
-                            Theme.of(context).toggleButtonsTheme.borderRadius,
-                        selectedBorderColor: Theme.of(context)
-                            .toggleButtonsTheme
-                            .selectedBorderColor,
-                        color: Theme.of(context).toggleButtonsTheme.color,
-                        selectedColor:
-                            Theme.of(context).toggleButtonsTheme.selectedColor,
-                        fillColor:
-                            Theme.of(context).toggleButtonsTheme.fillColor,
-                        isSelected: selections,
-                        onPressed: (int index) {
-                          if (_filterVisible) {
-                            setState(
-                              () {
-                                selections[index] = !selections[index];
-                                lootFilter(index);
-                              },
-                            );
-                          }
-                        },
-                        children: [
-                          MyApp.hiddenStash, //히든 스태쉬 Hidden Stash
-                          MyApp.safe, //돈통, 금고 Cash register, Safe
-                          MyApp.deadScav, //죽은 스캐브 Dead Scav
-                          MyApp.cabinet,
-                          MyApp.weaponBox, //무기 박스 Weapon Box
-                          MyApp.grenadeBox, //수류탄 박스 Grenade Box
-                          MyApp.ammoBox, //탄 박스 Ammo Box
-                          MyApp.jacket, //자켓 Jacket
-                          MyApp.meds, //의약품 Meds
-                          MyApp.pc, //컴퓨터 본체 PC
-                          MyApp.rationCrate, //음식 상자 Ration Crate
-                          MyApp.duffleBag, //더플백 Duffle Bag
-                          MyApp.toolBox, //공구 박스 Toolbox
-                          MyApp.woodenCrate, //나무 박스 Wooden crate
-                          MyApp.lockedRoom, //잠긴 문 Locked Room
-                          MyApp.looseLoot, //바닥 룻 Loose Loot
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: FloatingFilterButton(
-              onPressed: pressFilterButton,
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: FutureBuilder(
+        future: downloadMap(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Stack(
+              alignment: Alignment.bottomCenter,
               children: [
-                FloatingFloorButton(
-                  movePage: () => inToBuilding(
-                      Customs2F(
-                        title: 'Customs 2F',
-                      ),
-                      const Offset(0.0, -1.0)),
-                  up: true,
-                  heroTag: 'Customs 1F',
+                FutureBuilder<MapContainer>(
+                  future: _loadImage(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return MapContainer(
+                        snapshot.data!.child,
+                        snapshot.data!.size,
+                        markers: snapshot.data!.markers,
+                        markerWidgetBuilder: snapshot.data!.markerWidgetBuilder,
+                        onMarkerClicked: snapshot.data!.onMarkerClicked,
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
                 ),
-                const TextFloor(floor: 1),
-                FloatingFloorButton(
-                  movePage: () => inToBuilding(
-                      CustomsB1(
-                        title: 'Customs B1',
+                Positioned(
+                  left: 10,
+                  right: 10,
+                  bottom: 10,
+                  child: AnimatedOpacity(
+                    opacity: _filterVisible ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 350),
+                    child: Column(
+                      children: [
+                        FloatingActionButton.small(
+                          heroTag: 'Filter All',
+                          onPressed: () => pressAllButton(),
+                          backgroundColor:
+                              allToggle ? Colors.green[200] : Colors.black38,
+                          foregroundColor:
+                              allToggle ? Colors.white : Colors.green[400],
+                          child: MyApp.allFilter,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black38,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: ToggleButtons(
+                              borderRadius: Theme.of(context)
+                                  .toggleButtonsTheme
+                                  .borderRadius,
+                              selectedBorderColor: Theme.of(context)
+                                  .toggleButtonsTheme
+                                  .selectedBorderColor,
+                              color: Theme.of(context).toggleButtonsTheme.color,
+                              selectedColor: Theme.of(context)
+                                  .toggleButtonsTheme
+                                  .selectedColor,
+                              fillColor: Theme.of(context)
+                                  .toggleButtonsTheme
+                                  .fillColor,
+                              isSelected: selections,
+                              onPressed: (int index) {
+                                if (_filterVisible) {
+                                  setState(
+                                    () {
+                                      selections[index] = !selections[index];
+                                      lootFilter(index);
+                                    },
+                                  );
+                                }
+                              },
+                              children: [
+                                MyApp.hiddenStash, //히든 스태쉬 Hidden Stash
+                                MyApp.safe, //돈통, 금고 Cash register, Safe
+                                MyApp.deadScav, //죽은 스캐브 Dead Scav
+                                MyApp.cabinet,
+                                MyApp.weaponBox, //무기 박스 Weapon Box
+                                MyApp.grenadeBox, //수류탄 박스 Grenade Box
+                                MyApp.ammoBox, //탄 박스 Ammo Box
+                                MyApp.jacket, //자켓 Jacket
+                                MyApp.meds, //의약품 Meds
+                                MyApp.pc, //컴퓨터 본체 PC
+                                MyApp.rationCrate, //음식 상자 Ration Crate
+                                MyApp.duffleBag, //더플백 Duffle Bag
+                                MyApp.toolBox, //공구 박스 Toolbox
+                                MyApp.woodenCrate, //나무 박스 Wooden crate
+                                MyApp.lockedRoom, //잠긴 문 Locked Room
+                                MyApp.looseLoot, //바닥 룻 Loose Loot
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: FloatingFilterButton(
+                    onPressed: pressFilterButton,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FloatingFloorButton(
+                        movePage: () => inToBuilding(
+                            Customs2F(
+                              title: 'Customs 2F',
+                            ),
+                            const Offset(0.0, -1.0)),
+                        up: true,
+                        heroTag: 'Customs 1F',
                       ),
-                      const Offset(0, 1.0)),
-                  up: false,
-                  heroTag: 'Customs B1',
+                      const TextFloor(floor: 1),
+                      FloatingFloorButton(
+                        movePage: () => inToBuilding(
+                            CustomsB1(
+                              title: 'Customs B1',
+                            ),
+                            const Offset(0, 1.0)),
+                        up: false,
+                        heroTag: 'Customs B1',
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            ),
-          ),
-        ],
+            );
+          } else {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Downloading Map...'),
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
+          }
+        },
       ),
       bottomNavigationBar: Container(
         height: 50,
@@ -855,8 +910,10 @@ class _CustomsFullMapState extends State<CustomsFullMap> {
   _onTab(Size size) {}
 
   Future<MapContainer> _loadImage() async {
+    final path = (await getApplicationDocumentsDirectory()).path;
     final MapContainer map = MapContainer(
-      Image.asset('assets/images/customs_1F.png'),
+      //Image.asset('assets/images/customs_1F.png'),
+      Image.file(File('$path/$imageName')),
       size,
       markers: _getMarker(widget._facilityList, 8000.0, 8000.0),
       markerWidgetBuilder: _getMarkerWidget,
